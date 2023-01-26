@@ -30,7 +30,6 @@ function App() {
         <Intro></Intro>
         <About></About>
         <Experience></Experience>
-        <Statistics></Statistics>
         <Projects></Projects>
         <Credits></Credits>
       </div>
