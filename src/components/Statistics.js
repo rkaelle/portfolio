@@ -122,7 +122,7 @@ class Statistics extends React.Component {
           <ul className="stats-grid">
             {Object.keys(statistics).map((key, i) => (
               <FadeInSection delay={`${i + 1}00ms`}>
-                <li className="stats-card">
+                <li className="stats-card" >
                   <div className="stats-card-header">
                     <ExternalStats
                       githubLink={statistics[key]["link"]}

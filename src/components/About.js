@@ -25,7 +25,7 @@ class About extends React.Component {
     );
     const two = (
       <p>
-        Outside of work, I'm interested in drones, cars, the outdoors, and sneakers. And I'm always interested in learning more, whether it be through reading, investing, or podcasts.
+        Outside of work, I'm interested in drones, cars, the outdoors, and sneakers. And I'm always interested in learning more, whether it be through reading, podcasts, or hands-on projects.
       </p>
     );
 
@@ -35,7 +35,6 @@ class About extends React.Component {
       "Fintech",
       "RF Devices",
       "Linux",
-      "Computer Hardware",
       "Crypto"
     ];
 

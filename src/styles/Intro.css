@@ -61,7 +61,7 @@
   font-family: "NTR", sans-serif;
   padding: 10px 30px;
   cursor: pointer;
-  border: 1px solid var(--pink-bright);
+  border: 4px solid var(--pink-bright);
   border-radius: 4px;
 }
 

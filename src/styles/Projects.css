@@ -1,4 +1,5 @@
 #projects {
+  position: static;
   padding-left: 15%;
   padding-right: 25%;
   min-height: 60vh;
@@ -29,7 +30,6 @@
 }
 
 .projects-card:hover {
-  transform: translateY(-7px);
   background-color: var(--lightest-navy);
 }
 
