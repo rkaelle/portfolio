@@ -5,7 +5,7 @@
   The first iteration of <a href="https://ryankaelle.dev" target="_blank">ryankaelle.dev</a> built with React.js.
 </p>
 
-<img width="1306" alt="Site Screenshot" src="/assets/site_screenshot">
+<img width="1306" alt="Site Screenshot" src="/site_screenshot.png">
 
 ## set-up
 
