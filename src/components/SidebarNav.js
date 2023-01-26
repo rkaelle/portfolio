@@ -32,7 +32,7 @@ class SidebarNav extends React.Component {
       <a href="#header">/home</a>,
       <a href="#about">/about</a>,
       <a href="#experience">/experience</a>,
-      <a href="#statistics">/statistics</a>,
+      //<a href="#statistics">/statistics</a>,
       <a href="#projects">/creations & projects</a>
     ];
 
