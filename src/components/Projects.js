@@ -92,7 +92,7 @@ class Projects extends React.Component {
       },
       "Algorithmic Trading": {
         desc:
-          "A series of programs built from a .",
+          "A series of programs built from YFinance Data, Quantconnect Lean Engine, and Pandas",
         techStack: "Python, QuantConnect, Pandas, Numpy, Matplotlib ",
         link:
           "https://github.com/rkaelle/algo-trading-strategies",
@@ -101,7 +101,7 @@ class Projects extends React.Component {
       "This site! (My Portfolio)": {
         desc:
           "Built using ReactJS. This site serves as a place to show off my current updates",
-        techStack: "Javascript, Node.js, Natural NLP, Telegram API",
+        techStack: "ReactJS, MaterualUI",
         link: "https://github.com/rkaelle/portfolio",
         open: "https://ryankaelle.dev"
       },
