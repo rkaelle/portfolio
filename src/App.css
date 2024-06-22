@@ -2,7 +2,7 @@
   font-family: "NTR";
   font-weight: 200;
   font-display: fallback;
-  src: url("/fonts/NTR-Regular.ttf") format("truetype");
+  src: url("../public/fonts/NTR-Regular.ttf") format("truetype");
 }
 
 html {
@@ -29,6 +29,8 @@ html {
   background-color: var(--navy);
   display: flex;
   flex-direction: row;
+  height: 100vh; /* Set the height to be 100% of the viewport height */
+  overflow: hidden; /* Hide overflow to prevent scrolling outside */
   /* padding: 36px 76px; */
 }
 .App-logo {
@@ -37,10 +39,10 @@ html {
 }
 
 #content {
-  /* padding: 80px 200px; */
   width: 100vw;
-  overflow-x: hidden;
-  overflow-y: hidden;
+  max-height: calc(100vh - 3px); /* Adjust this value */
+  overflow-y: auto; /* Enable vertical scrolling inside content area */
+  overflow-x: hidden; /* Keep horizontal scrolling disabled */
 }
 .rs-steps-horizontal .rs-steps-item-content {
   text-align: left;
@@ -55,6 +57,7 @@ html {
     animation: App-logo-spin infinite 20s linear;
   }
 }
+
 
 .App-header {
   min-height: 100vh;
