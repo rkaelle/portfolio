@@ -1,0 +1,82 @@
+@font-face {
+  font-family: "NTR";
+  font-weight: 200;
+  font-display: fallback;
+  src: url("../../public/fonts/NTR-Regular.ttf") format("truetype");
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #000;
+}
+
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(10vh);
+  visibility: hidden;
+  transition: opacity 0.6s ease-out, transform 1s ease-out;
+  will-change: opacity, visibility;
+}
+.fade-in-section.is-visible {
+  opacity: 1;
+  transform: none;
+  visibility: visible;
+}
+
+.App {
+  background-color: var(--navy);
+  display: flex;
+  flex-direction: row;
+  height: 100vh; /* Full viewport height */
+  overflow: hidden; /* Hide overflow to prevent scrolling outside */
+}
+
+#content {
+  width: 100vw;
+  max-height: calc(100vh - 3px); /* Adjust this value */
+  overflow-y: auto; /* Enable vertical scrolling inside content area */
+  overflow-x: hidden; /* Keep horizontal scrolling disabled */
+}
+
+#progressBarContainer {
+  position: fixed;
+  z-index: 10;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+#progressBar {
+  background: var(--pink-bright);
+  transform-origin: top left;
+  transform: scale(0,1);
+}
+
+#progressBarContainer,
+#progressBar {
+  height: 18px;
+}
+
+@media only screen and (max-width: 600px) {
+  .App {
+    flex-direction: column;
+    padding: 40px 24px;
+  }
+
+  #content {
+    padding: 10px 10px;
+    width: 100%;
+  }
+
+  .section-header {
+    width: unset;
+  }
+
+  .section-header::after {
+    display: none;
+  }
+
+  .section-title {
+    font-size: 32px;
+  }
+}

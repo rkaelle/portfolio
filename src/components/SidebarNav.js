@@ -1,5 +1,6 @@
 import React from "react";
 import { Sidenav } from "rsuite";
+import { Link } from "react-router-dom";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import EmailRoundedIcon from "@material-ui/icons/EmailRounded";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
@@ -29,11 +30,12 @@ class SidebarNav extends React.Component {
     const { expanded } = this.state;
 
     const links = [
-      <a href="#header">/home</a>,
-      <a href="#about">/about</a>,
-      <a href="#experience">/experience</a>,
+      <a href="/">/home</a>,
+      <a href="/#about">/about</a>,
+      <a href="/#experience">/experience</a>,
       //<a href="#statistics">/statistics</a>,
-      <a href="#projects">/creations & projects</a>
+      <a href="/#projects">/creations & projects</a>,
+      <Link to="/manage">/manage daily news</Link>
     ];
 
     return (

@@ -9,6 +9,9 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "bootstrap": "^4.6.1",
+    "firebase": "^10.12.2",
+    "next": "^12.3.4",
+    "next-seo": "^5.14.1",
     "p5": "^1.5.0",
     "react": "^16.13.1",
     "react-bootstrap": "^1.6.4",
@@ -18,13 +21,12 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^5.0.1",
     "react-transition-group": "^4.4.1",
+    "react-type-animation": "2.1.2",
     "react-typist": "^2.0.5",
     "rsuite": "^4.8.2",
     "schema-utils": "^3.0.0",
-    "three": "^0.126.1",
-    "react-type-animation": "2.1.2",
-    "next": "12.3.4",
-    "next-seo": "5.14.1"
+    "styled-components": "^6.1.11",
+    "three": "^0.126.1"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,0 +1,147 @@
+/* Footer.css */
+.Manage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto; /* Adjusted to auto to fit content */
+    background-color: var(--darknavy);
+    overflow: hidden;
+    position: relative;
+    width: calc(100% - 20%); /* Adjust width to match projects */
+    margin-left: 12%; /* Match projects left padding */
+    margin-right: 10%; /* Match projects right padding */
+}
+
+.form {
+    position: relative;
+    padding: 2rem; /* Adjusted for a balanced look */
+    width: 100%; /* Take full width to match projects container */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+}
+
+@media only screen and (max-width: 600px) {
+    .Manage {
+        padding-left: 0; 
+        padding-right: 0;
+        width: 90%; /* Responsive width for smaller screens, matching projects */
+        margin-left: 5%; /* Center footer on small screens */
+        margin-right: 5%;
+    }
+    .form {
+        padding: 1rem;
+        width: 100%; /* Responsive width for smaller screens */
+    }
+}
+
+.form {
+    position: relative;
+    padding: 2rem; /* Adjusted for a balanced look */
+    min-width: 300px;
+    max-width: 80%; /* Limit max width for better control */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.h2 {
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.name-inputs {
+    display: flex;
+    justify-content: space-between;
+    width: 100%; /* Take full width of form */
+    margin-bottom: 1rem;
+}
+
+.first, .last {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    width: 48%; /* Slightly less than half to fit side by side */
+    background-color: var(--light-navy);
+    color: var(--pink-bright);
+}
+
+.input {
+    width: 100%; /* Full width for email input */
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    background-color: var(--light-navy);
+    color: var(--pink-bright);
+    margin-bottom: 1rem;
+}
+
+.Button {
+    padding: 10px 20px;
+    margin: 10px 0;
+    width: 100%; /* Full width for button */
+    border-radius: 10px;
+    background-color: var(--pink-bright);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.Button:hover {
+    background-color: #7a1cb8be;
+}
+
+@media only screen and (max-width: 600px) {
+    .Manage {
+        padding-left: 0; 
+        padding-right: 0;
+    }
+    .form {
+        padding: 1rem;
+        min-width: 90%; /* Responsive width for smaller screens */
+    }
+}
+
+
+.message {
+    margin-top: 1rem;
+    padding: 10px;
+    border-radius: 5px;
+    color: #fff; /* White text */
+    text-align: center;
+    background-color: #f44336; /* Red for error messages */
+    animation: fadeInOut 5s linear forwards;
+}
+
+
+@keyframes fadeInOut {
+    0% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.message.error {
+    background-color: #f44336; /* Red background for errors */
+}
+
+.message.success {
+    background-color: #4CAF50; /* Green background for successes */
+}
+
+.message-container {
+    height: 50px; /* Adjust based on typical message height */
+    margin-bottom: 1rem; /* Space below the reserved area */
+}
+
+.message {
+    height: 100%; /* Fill the reserved container */
+    padding: 10px;
+    border-radius: 5px;
+    color: #fff;
+    text-align: center;
+    background-color: #f44336;
+    animation: fadeInOut 5s linear forwards;
+}
