@@ -48,9 +48,6 @@ function Home() {
         <Footer />
         <Credits />
       </div>
-      <div id="progressBarContainer">
-        <div id="progressBar" style={{ transform: `scale(${scroll}, 1)` }} />
-      </div>
       <ScrollIndicator />
       <SidebarNav />
     </div>

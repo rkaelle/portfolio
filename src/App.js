@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
 import { DefaultSeo, SocialProfileJsonLd } from 'next-seo';
 import seo from './components/seo.config.json';
 import SidebarNav from "./components/SidebarNav";
@@ -7,7 +7,6 @@ import "./App.css";
 import ScrollIndicator from './components/ScrollIndicator';
 import "./styles/Global.css";
 import "rsuite/dist/styles/rsuite-default.css";
-
 
 function App() {
   return (
