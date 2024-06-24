@@ -9,6 +9,8 @@ import About from "../components/About";
 import Projects from "../components/Projects";
 import Credits from "../components/Credits";
 import Footer from "../components/Footer";
+import ScrollIndicator from "../components/ScrollIndicator";
+import Signature from "../components/Signature";
 import "../styles/Home.css";
 import "../styles/Global.css";
 import "rsuite/dist/styles/rsuite-default.css";
@@ -16,21 +18,25 @@ import "rsuite/dist/styles/rsuite-default.css";
 function Home() {
   const [scroll, setScroll] = useState(0);
 
-useEffect(() => {
-  const progressBarHandler = () => {
-    const totalScroll = document.documentElement.scrollTop;
-    const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const scroll = totalScroll / windowHeight;
-    console.log('Scroll:', scroll); // Add this line
-    setScroll(scroll);
-  };
+  useEffect(() => {
+    const progressBarHandler = () => {
+      const totalScroll = document.documentElement.scrollTop;
+      const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scroll = totalScroll / windowHeight;
+      console.log('Scroll:', scroll); // Keep this line for debugging
+      setScroll(scroll);
+    };
 
-  window.addEventListener("scroll", progressBarHandler);
-  return () => window.removeEventListener("scroll", progressBarHandler);
-}, []);
+    const handleScroll = () => {
+      requestAnimationFrame(progressBarHandler);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   return (
     
-    <div className="App">
+    <div className="Home">
       <div id="content">
         <DefaultSeo {...seo.defaultSeo} />
         <SocialProfileJsonLd {...seo.socialProfileJsonLd} />
@@ -45,6 +51,7 @@ useEffect(() => {
       <div id="progressBarContainer">
         <div id="progressBar" style={{ transform: `scale(${scroll}, 1)` }} />
       </div>
+      <ScrollIndicator />
       <SidebarNav />
     </div>
   );

@@ -19,7 +19,7 @@ class About extends React.Component {
   render() {
     const one = (
       <p>
-        I am currently a Senior at <a href="https://www.acalanes.k12.ca.us/miramonte"> Miramonte High School</a>, looking to work in electrical engineering, fintech, and data science. At the same time, I am undertaking outside <a href="https://www.udemy.com/user/ryan-kaelle-2/">online courses </a> to expand my skills.
+        I am currently an incoming Sophomore at <a href="https://eecs.engin.umich.edu/"> the University of Michigan</a>, looking to work in electrical engineering, fintech,and crypto.  I’m fascinated by technical, large scale products that are changing the technological landscape. I’ve been lucky enough to work on some pretty interesting projects while also learning about outside topics to expand my skills.
         
       </p>
     );
@@ -30,13 +30,23 @@ class About extends React.Component {
     );
 
     const tech_stack = [
-      "Python",
-      "3D Printing",
-      "Fintech",
+      "Blockchain",
+      "Swarm Robotics",
+      "AI/ML", 
       "RF Devices",
-      "Linux",
-      "Crypto"
+      "Algorithmic Trading",
+      "Additive Manufacturing"
+      
     ];
+
+    const language_stack = [
+      "Python",
+      "C++",
+      "MATLAB",
+      "React.js",
+      "SQL",
+      "Typescript"
+    ]
 
     return (
       <div id="about">
@@ -58,6 +68,15 @@ class About extends React.Component {
                 })}
               </ul>
               {[two]}
+              <ul className="language-stack">
+                {language_stack.map(function (language_item, i) {
+                  return (
+                    <FadeInSection delay={`${i + 1}00ms`}>
+                      <li>{language_item}</li>
+                    </FadeInSection>
+                  );
+                })}
+              </ul>
             </div>
             <div className="ryan_portrait">
               <img class="image_on" src="/assets/porsche.png" alt="Ryan + Porsche"/>

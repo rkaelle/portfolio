@@ -3,6 +3,8 @@ import "../styles/Manage.css";
 import { db } from '../components/firebase';
 import { collection, addDoc, serverTimestamp, query, where, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import FadeInSection from "../components/FadeInSection";
+import SidebarNav from '../components/SidebarNav';
+import { Link } from "react-router-dom";
 
 function Manage() {
     const [inputs, setInputs] = useState({
@@ -81,44 +83,50 @@ function Manage() {
     }, [message]);
 
     return (
-        <div className="Footer">
-            <div className="container">
-                <FadeInSection>
-                    <form className="form" onSubmit={submitHandler}>
-                        <h2 className="h2">Subscribe to Ryan's Daily News</h2>
-                        <div className="name-inputs">
-                            <input
-                                className="first"
-                                type="text"
-                                placeholder="Enter first name"
-                                name="firstName"
-                                onChange={handleInputChange}
-                                value={inputs.firstName}
-                            />
-                            <input
-                                className="last"
-                                type="text"
-                                placeholder="Enter last name"
-                                name="lastName"
-                                onChange={handleInputChange}
-                                value={inputs.lastName}
-                            />
-                        </div>
-                        <input
-                            className="input"
-                            type="email"
-                            placeholder="Enter email"
-                            name="email"
-                            onChange={handleInputChange}
-                            value={inputs.email}
-                        />
-                        <button className="Button" type="submit">Submit</button>
-                        <button type="button" className="Button" onClick={unsubscribeHandler}>Unsubscribe</button>
-                        {message && (<p className={`message ${message.includes("Successfully") ? 'success' : 'error'}`}>{message}</p>)}
-                    </form>
-                </FadeInSection>
+        <div> {/* Added this div to enclose all content */}
+            <div className="top-left-button">
+                <Link to="/" className="home-button">&lt;&lt; return home</Link>
             </div>
-        </div>
+            <div className="Manage">
+                <div className="container">
+                    <FadeInSection>
+                        <form className="form" onSubmit={submitHandler}>
+                            <h2 className="h2">Subscribe to Ryan's Daily News</h2>
+                            <div className="name-inputs">
+                                <input
+                                    className="first"
+                                    type="text"
+                                    placeholder="Enter first name"
+                                    name="firstName"
+                                    onChange={handleInputChange}
+                                    value={inputs.firstName}
+                                />
+                                <input
+                                    className="last"
+                                    type="text"
+                                    placeholder="Enter last name"
+                                    name="lastName"
+                                    onChange={handleInputChange}
+                                    value={inputs.lastName}
+                                />
+                            </div>
+                            <input
+                                className="input"
+                                type="email"
+                                placeholder="Enter email"
+                                name="email"
+                                onChange={handleInputChange}
+                                value={inputs.email}
+                            />
+                            <button className="Button" type="submit">Submit</button>
+                            <button type="button" className="Button" onClick={unsubscribeHandler}>Unsubscribe</button>
+                            {message && (<p className={`message ${message.includes("Successfully") ? 'success' : 'error'}`}>{message}</p>)}
+                        </form>
+                    </FadeInSection>
+                </div>
+                <SidebarNav />
+            </div>
+        </div> // Closing tag for the
     );
 }
 

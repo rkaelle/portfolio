@@ -14,8 +14,6 @@ function App() {
     <div className="App">
       <DefaultSeo {...seo.defaultSeo} />
       <SocialProfileJsonLd {...seo.socialProfileJsonLd} />
-      <ScrollIndicator /> {/* Add Scroll Indicator here */}
-      <SidebarNav />
       <Main />
     </div>
   );
