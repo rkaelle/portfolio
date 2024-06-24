@@ -7,12 +7,14 @@ import "./App.css";
 import ScrollIndicator from './components/ScrollIndicator';
 import "./styles/Global.css";
 import "rsuite/dist/styles/rsuite-default.css";
+import { Analytics } from "@vercel/analytics/react"
 
 function App() {
   return (
     <div className="App">
       <DefaultSeo {...seo.defaultSeo} />
       <SocialProfileJsonLd {...seo.socialProfileJsonLd} />
+      <Analytics />
       <Main />
     </div>
   );
