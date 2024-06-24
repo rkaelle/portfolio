@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import "../styles/Global.css";
 
 const ScrollIndicator = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -24,9 +25,9 @@ const ScrollIndicator = () => {
         top: 0,
         left: 0,
         width: `${scrollProgress}%`,
-        height: '5px',
-        backgroundColor: 'yellow',
-        zIndex: 1000,
+        height: '3px',
+        backgroundColor: "#e0c709",
+        zIndex: 10000,
       }}
     />
   );

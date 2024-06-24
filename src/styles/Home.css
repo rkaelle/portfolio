@@ -88,7 +88,7 @@ html {
 
 #progressBarContainer {
   position: fixed;
-  z-index: 10;
+  z-index: 10000;
   background: rgba(255,255,255,0.05);
   width: 100%;
   top: 0;
@@ -106,10 +106,16 @@ html {
   height: 3px;
 }
 
+#progressBarContainer, #progressBar {
+  visibility: visible; 
+  opacity: 1; 
+}
+
 @media only screen and (max-width: 600px) {
   .App {
     flex-direction: column;
     padding: 40px 24px;
+    
   }
 
   #content {
@@ -128,4 +134,5 @@ html {
   .section-title {
     font-size: 32px;
   }
+
 }

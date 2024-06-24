@@ -5,6 +5,7 @@ import Manage from '../pages/manage';
 import Home from '../pages/Home';
 import GalleryPage from '../pages/gallery';
 import ErrorPage from '../pages/errorPage'; 
+import ScrollIndicator from './ScrollIndicator';
 
 const Main = () => {
   return (

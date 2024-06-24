@@ -6,6 +6,8 @@ import FadeInSection from "../components/FadeInSection";
 import SidebarNav from '../components/SidebarNav';
 import { Link } from "react-router-dom";
 
+
+
 function Manage() {
     const [inputs, setInputs] = useState({
         email: '',
@@ -19,6 +21,14 @@ function Manage() {
         const { name, value } = e.target;
         setInputs(prevInputs => ({ ...prevInputs, [name]: value }));
     };
+
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+    // Function to toggle sidebar
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+    };
+
 
     // Submit handler for form submission
     const submitHandler = async (e) => {
