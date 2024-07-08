@@ -1,15 +1,14 @@
 {
   "files": {
     "main.css": "/static/css/main.1655017c.css",
-    "main.js": "/static/js/main.dabfe193.js",
+    "main.js": "/static/js/main.b09023fb.js",
     "static/media/NTR-Regular.ttf": "/static/media/NTR-Regular.96839eb7b68e4482d73d.ttf",
-    "static/media/Signature.gif": "/static/media/Signature.026aaaeee998aff5dd99.gif",
     "index.html": "/index.html",
     "main.1655017c.css.map": "/static/css/main.1655017c.css.map",
-    "main.dabfe193.js.map": "/static/js/main.dabfe193.js.map"
+    "main.b09023fb.js.map": "/static/js/main.b09023fb.js.map"
   },
   "entrypoints": [
     "static/css/main.1655017c.css",
-    "static/js/main.dabfe193.js"
+    "static/js/main.b09023fb.js"
   ]
 }
