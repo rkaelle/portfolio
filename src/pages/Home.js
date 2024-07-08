@@ -10,7 +10,6 @@ import Projects from "../components/Projects";
 import Credits from "../components/Credits";
 import Footer from "../components/Footer";
 import ScrollIndicator from "../components/ScrollIndicator";
-import Signature from "../components/Signature";
 import "../styles/Home.css";
 import "../styles/Global.css";
 import "rsuite/dist/styles/rsuite-default.css";
