@@ -1,97 +1,97 @@
-import { useState } from 'react';
-import styled from 'styled-components';
+import { useState, useEffect } from 'react';
+import "../styles/Footer.css";
 import { db } from './firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import FadeInSection from "./FadeInSection";
 
-function Footer(){
-    const [input, setInput] = useState("");
 
-    const inputHandler = (e) => {
-        setInput(e.target.value);
+function Footer() {
+    const [inputs, setInputs] = useState({
+        email: '',
+        firstName: '',
+        lastName: ''
+    });
+    const [message, setMessage] = useState('');
+
+    // Handle input changes for all fields
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setInputs(prevInputs => ({ ...prevInputs, [name]: value }));
     };
 
+    // Submit handler for form submission
     const submitHandler = async (e) => {
         e.preventDefault();
-        if (input) {
-            console.log(input);
-            try {
-                await addDoc(collection(db, "emails"), {
-                    email: input,
-                    time: serverTimestamp(),
-                });
-            } catch (error) {
-                console.error("Error adding document: ", error);
-            }
+        const { email, firstName, lastName } = inputs;
+        if (!email || !firstName || !lastName) {
+            setMessage('Please fill in all fields.');
+            return; // Stop the function if any field is missing
+        }
+
+        try {
+            await addDoc(collection(db, "emails"), {
+                firstName,
+                lastName,
+                email,
+                time: serverTimestamp(),
+            });
+            setInputs({ email: '', firstName: '', lastName: '' });
+            setMessage('Successfully subscribed!');
+        } catch (error) {
+            console.error("Error adding document: ", error);
+            setMessage('Failed to subscribe. Please try again later.');
         }
     };
 
+    // Clear message after 5 seconds
+    useEffect(() => {
+        if (message !== '') {
+            const timer = setTimeout(() => {
+                setMessage('');
+            }, 5000);
+            return () => clearTimeout(timer);
+        }
+    }, [message]);
+
     return (
-        <Div className="App">
-            <Container>
-                <Form onSubmit={submitHandler}>
-                    <H2>Subscribe to Ryan's Daily News</H2>
-                    <Input type="email" onChange={inputHandler} />
-                    <Button type="submit">Submit</Button>
-                </Form>
-            </Container>
-        </Div>
+        <div className="Footer">
+            <div className="container">
+                <FadeInSection>
+                    <form className="form" onSubmit={submitHandler}>
+                        <h2 className="h2">Subscribe to Ryan's Daily News</h2>
+                        <div className="name-inputs">
+                            <input 
+                                className="first" 
+                                type="text" 
+                                placeholder="Enter first name" 
+                                name="firstName"
+                                onChange={handleInputChange} 
+                                value={inputs.firstName} 
+                            />
+                            <input 
+                                className="last" 
+                                type="text" 
+                                placeholder="Enter last name" 
+                                name="lastName"
+                                onChange={handleInputChange} 
+                                value={inputs.lastName} 
+                            />
+                        </div>
+                        <input 
+                            className="input" 
+                            type="email" 
+                            placeholder="Enter email" 
+                            name="email"
+                            onChange={handleInputChange} 
+                            value={inputs.email} 
+                        />
+                        <button className="Button" type="submit">Submit</button>
+                        <div className="message-container">{message && (<p className={`message ${message.includes("Successfully") ? 'success' : 'error'}`}>{message}</p>)}</div>
+                    </form>
+                </FadeInSection>
+            </div>
+        </div>
     );
 }
-
-
-const Div = styled.div`
-  height: 50vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #0d0d0d;
-  overflow: hidden;
-`;
-
-const Container = styled.div`
-  position: relative;
-`;
-
-const Form = styled.form`
-  position: relative;
-  padding: 3rem;
-  background: rgba(255, 255, 255, 0.1);
-  min-width: 500px;
-  border-radius: 5px;
-  backdrop-filter: blur(10px);
-  background-clip: padding-box;
-  z-index: 2;
-`;
-
-const H2 = styled.h2`
-  padding: 1rem;
-  text-align: center;
-  font-size: 2rem;
-  color: white;
-`;
-
-const Input = styled.input`
-  padding: 10px;
-  border-radius: 10px 0 0 10px;
-  border: none;
-  width: 80%;
-  outline: none;
-  color: #cf1d22;
-`;
-
-const Button = styled.button`
-  color: #fff;
-  background-color: #8A2BE2;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 0 10px 10px 0;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: #7a1cb8;
-  }
-`;
 
 export default Footer;
