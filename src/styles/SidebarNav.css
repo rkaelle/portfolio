@@ -77,11 +77,24 @@ img {
 
 @media only screen and (max-width: 600px) {
   .sidebar-nav {
-    position: unset;
-    align-items: center;
+    top: 0;
+    height: top; /* Adjust height to be just enough for the logos */
+    justify-content: flex-end; /* Align logos to the right */
+    padding-right: 20px; /* Spacing from the right edge */
   }
+
+  .sidebar-links, .sidebar-link-text {
+    display: none; /* Hide text links */
+  }
+
   .sidebar-logos {
-    width: 70px;
-    padding-left: unset;
+    display: flex;
+    align-items: center; /* Center logos vertically */
+    width: auto; /* Auto width to minimize space */
+    padding-left: 0; /* Remove padding */
+  }
+
+  img {
+    height: 24px; /* Adjust logo size appropriately */
   }
 }

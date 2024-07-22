@@ -1,9 +1,10 @@
 import React from "react";
 import { Sidenav } from "rsuite";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { Link } from "react-router-dom";
 import EmailRoundedIcon from "@material-ui/icons/EmailRounded";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import GitHubIcon from "@material-ui/icons/GitHub";
+import XIcon from '@mui/icons-material/X';
 
 import "../styles/SidebarNav.css";
 import "react-typist/dist/Typist.css";
@@ -19,23 +20,24 @@ class SidebarNav extends React.Component {
       activeKey: "1"
     };
     this.handleSelect = this.handleSelect.bind(this);
+    this.scrollToSection = this.scrollToSection.bind(this);
   }
+
   handleSelect(eventKey) {
     this.setState({
       activeKey: eventKey
     });
   }
+
+  scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
   render() {
     const { expanded } = this.state;
-
-    const links = [
-      <a href="#header">/home</a>,
-      <a href="#about">/about</a>,
-      <a href="#experience">/experience</a>,
-      //<a href="#statistics">/statistics</a>,
-      <a href="#projects">/creations & projects</a>
-    ];
-
     return (
       <div className="sidebar-nav">
         {!isMobile && (
@@ -48,25 +50,41 @@ class SidebarNav extends React.Component {
           >
             <Sidenav.Body>
               <div className="sidebar-links">
-                {links.map((link, i) => (
-                  <FadeInSection delay={`${i + 1}00ms`}>
-                    <div>{link}</div>
-                  </FadeInSection>
-                ))}
+                <FadeInSection delay="100ms">
+                  <div><a href="/" onClick={() => this.scrollToSection('home')}>/home</a></div>
+                </FadeInSection>
+                <FadeInSection delay="200ms">
+                  <div><a href="#" onClick={() => this.scrollToSection('about')}>/about</a></div>
+                </FadeInSection>
+                <FadeInSection delay="300ms">
+                  <div><a href="#" onClick={() => this.scrollToSection('experience')}>/experience</a></div>
+                </FadeInSection>
+                <FadeInSection delay="400ms">
+                <div><a href="#" onClick={() => this.scrollToSection('projects')}>/creations & projects</a></div>
+                </FadeInSection>
+                <FadeInSection delay="500ms">
+                  <div><Link to="/manage">/manage daily news</Link></div>
+                </FadeInSection>
+                <FadeInSection delay="500ms">
+                  <div><Link to="/gallery">/gallery</Link></div>
+                </FadeInSection>
               </div>
             </Sidenav.Body>
           </Sidenav>
         )}
-        <div className="sidebar-logos" href="/">
+        <div className="sidebar-logos">
           <a href="mailto:rkaelle2@gmail.com">
-            <EmailRoundedIcon style={{ fontSize: 20 }}></EmailRoundedIcon>
+            <EmailRoundedIcon style={{ fontSize: 20 }} />
           </a>
           <a href="https://github.com/rkaelle">
-            <GitHubIcon style={{ fontSize: 19 }}></GitHubIcon>
+            <GitHubIcon style={{ fontSize: 19 }} />
           </a>
           <a href="https://www.linkedin.com/in/ryan-kaelle/">
-            <LinkedInIcon style={{ fontSize: 21 }}></LinkedInIcon>
-          </a> 
+            <LinkedInIcon style={{ fontSize: 21 }} />
+          </a>
+          <a href="https://x.com/KaelleRyan">
+            <XIcon style={{ fontSize: 21 }} />
+          </a>
         </div>
       </div>
     );
