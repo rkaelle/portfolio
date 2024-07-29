@@ -1,0 +1,109 @@
+
+  
+  .Manage {
+    background-color: var(--navy);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    min-height: 100vh;
+    min-width: 100%;
+  }
+  
+  .Manage #progressBarContainer {
+    display: none !important;
+  }
+  
+  html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+  }
+  
+  .form {
+    position: relative;
+    padding: 2rem;
+    min-width: 300px;
+    max-width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+  }
+  
+  .h2 {
+    color: white;
+    margin-bottom: 1rem;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    background-color: var(--light-navy);
+    color: var(--pink-bright);
+    margin-bottom: 1rem;
+  }
+  
+  .Button {
+    padding: 10px 20px;
+    width: 100%;
+    border-radius: 10px;
+    background-color: var(--pink-bright);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .Button:hover {
+    background-color: #e0c70972;
+  }
+  
+  .message-container {
+    height: 50px;
+    margin-bottom: 1rem;
+  }
+  
+  .message {
+    height: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    color: #fff;
+    text-align: center;
+    background-color: #f44336;
+    animation: fadeInOut 5s linear forwards;
+  }
+  
+  .message.error {
+    background-color: #f44336;
+  }
+  
+  .message.success {
+    background-color: #4CAF50;
+  }
+  
+  @keyframes fadeInOut {
+    0% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+  
+  @media only screen and (max-width: 600px) {
+    .Manage, .form {
+      padding: 0;
+      margin: 0 auto;
+      width: 100%;
+      max-width: 100%;
+    }
+    .input, .Button {
+      width: 100%;
+      padding: 8px 15px;
+    }
+    h2, .input, .Button, p {
+      font-size: smaller;
+    }
+  }

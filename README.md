@@ -2,7 +2,7 @@
   ryankaelle.dev
 </h1>
 <p align="center">
-  The first iteration of <a href="https://ryankaelle.dev" target="_blank">ryankaelle.dev</a> built with React.js.
+  The latest version of <a href="https://rkaelle.com" target="_blank">rkaelle.com</a> built with React.js.
 </p>
 
 <img width="1306" alt="Site Screenshot" src="/site_screenshot.png">

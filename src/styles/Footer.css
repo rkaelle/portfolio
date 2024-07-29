@@ -22,6 +22,8 @@
     border-radius: 5px;
 }
 
+
+
 @media only screen and (max-width: 600px) {
     .Footer {
         padding-left: 0; 
@@ -57,6 +59,10 @@
     justify-content: space-between;
     width: 100%; /* Take full width of form */
     margin-bottom: 1rem;
+}
+
+.first:focus, .last:focus, .input:focus {
+    outline: 1px solid var(--pink-bright); 
 }
 
 .first, .last {
