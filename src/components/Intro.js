@@ -4,9 +4,10 @@ import "../styles/Intro.css";
 import Typist from "react-typist";
 import "react-typist/dist/Typist.css";
 
-import EmailRoundedIcon from "@material-ui/icons/EmailRounded";
+import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
 import FadeInSection from "./FadeInSection";
 import FractalTree from "./FractalTree";
+import ThreeDScene from "./ThreeDScene";
 
 class Intro extends React.Component {
   constructor() {
@@ -26,7 +27,7 @@ class Intro extends React.Component {
   render() {
     return (
       <div id="intro">
-        <FractalTree></FractalTree>
+        <ThreeDScene></ThreeDScene>
         <Typist cursor={{ hideWhenDone: true }}>
           <span className="intro-title">
             {"hi, i'm "}

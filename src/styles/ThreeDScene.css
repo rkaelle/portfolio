@@ -1,0 +1,17 @@
+
+#three-d-canvas-container {
+    padding-bottom: 20px;
+    width: 250px;
+    height: 250px;
+  }
+  
+  #three-d-canvas {
+    width: 100%; /* Adjust to your desired width */
+    height: 100vh; /* Full viewport height */
+  }
+  
+  @media only screen and (max-width: 600px) {
+    #three-d-canvas {
+      display: none; /* Hide canvas on small screens */
+    }
+  }

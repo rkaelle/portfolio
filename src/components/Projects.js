@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/Projects.css";
-import FolderOpenRoundedIcon from "@material-ui/icons/FolderOpenRounded";
+import FolderOpenRoundedIcon from '@mui/icons-material/FolderOpenRounded';
 import FadeInSection from "./FadeInSection";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import Carousel from "react-bootstrap/Carousel";

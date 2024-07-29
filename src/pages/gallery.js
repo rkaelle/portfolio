@@ -7,40 +7,51 @@ import "../styles/Global.css";
 
 const GalleryPage = () => {
     const [photos, setPhotos] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchPhotos = async () => {
+            setLoading(true);
+            setError(null);
             try {
-                // Create a reference to the photos folder
                 const storageRef = ref(storage, 'photos/');
                 const listResult = await listAll(storageRef);
 
-                // Log the list result for debugging
                 console.log('listResult:', listResult);
 
-                const photoDataPromises = listResult.items.map(async item => {
-                    const url = await getDownloadURL(item);
-                    const metadata = await getMetadata(item);
+                const photoDataPromises = listResult.items.map(async (item) => {
+                    try {
+                        const url = await getDownloadURL(item);
+                        const metadata = await getMetadata(item);
 
-                    // Log each URL and metadata for debugging
-                    console.log('URL:', url);
-                    console.log('Metadata:', metadata);
+                        console.log('URL:', url);
+                        console.log('Metadata:', metadata);
 
-                    return {
-                        src: url,
-                        width: metadata.width || 4,
-                        height: metadata.height || 3
-                    };
+                        return {
+                            src: url,
+                            width: metadata.width || 4,  // Provide default width if not available
+                            height: metadata.height || 3 // Provide default height if not available
+                        };
+                    } catch (itemError) {
+                        console.error('Error fetching item data:', itemError);
+                        return null; // Skip this item if an error occurs
+                    }
                 });
 
                 const photoData = await Promise.all(photoDataPromises);
 
-                // Log photo data for debugging
-                console.log('photoData:', photoData);
+                // Filter out any null values
+                const validPhotoData = photoData.filter(photo => photo !== null);
 
-                setPhotos(photoData);
-            } catch (error) {
-                console.error('Error fetching photos:', error);
+                console.log('photoData:', validPhotoData);
+
+                setPhotos(validPhotoData);
+            } catch (fetchError) {
+                console.error('Error fetching photos:', fetchError);
+                setError(`Failed to fetch photos: ${fetchError.message}`);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -50,7 +61,11 @@ const GalleryPage = () => {
     return (
         <div id="gallery-page">
             <div className="gallery-container">
-                {photos.length > 0 ? (
+                {loading ? (
+                    <p>Loading photos...</p>
+                ) : error ? (
+                    <p>{error}</p>
+                ) : photos.length > 0 ? (
                     <Gallery photos={photos} direction={"row"} />
                 ) : (
                     <p>No photos available</p>

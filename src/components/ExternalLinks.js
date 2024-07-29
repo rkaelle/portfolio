@@ -1,6 +1,6 @@
 import React from "react";
-import GitHubIcon from "@material-ui/icons/GitHub";
-import OpenInBrowserIcon from "@material-ui/icons/OpenInBrowser";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import OpenInBrowserIcon from "@mui/icons-material/OpenInBrowser";
 
 class ExternalLinks extends React.Component {
   constructor() {
