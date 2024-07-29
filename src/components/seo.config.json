@@ -2,13 +2,13 @@
     "defaultSeo": {
         "title": "Ryan Kaelle | Personal Website",
         "description": "Ryan Kaelle Media Portfolio Link Library and Publications built with React.js",
-        "canonical": "http://ryankaelle.dev",
+        "canonical": "http://rkaelle.com",
 
         "openGraph": {
             "title": "Ryan Kaelle | Personal Website",
             "description":
                 "Ryan Kaelle's Personal Website and Portfolio ",
-                "url": "https:/ryankaelle.dev",
+                "url": "https:/rkaelle.com",
                 "type": "profile",
                 "profile": {
                 "firstName": "Ryan",
@@ -18,7 +18,7 @@
             },
             "images": [
                 {
-                    "url": "https://i.ibb.co/5j8pyd9/square-ryan-kaelle-headshot.png",
+                    "url": "https://www.rkaelle.com/assets/ryan_headshot.jpg",
                     "width": "360",
                     "height": "360",
                     "alt": "Ryan Kaelle"
@@ -30,10 +30,10 @@
     "socialProfileJsonLd": {
         "type": "Person",
         "name": "Ryan Kaelle",
-        "url": "http://ryankaelle.dev",
-        "image": "https://i.ibb.co/5j8pyd9/square-ryan-kaelle-headshot.png",
+        "url": "http://rkaelle.com",
+        "image": "https://www.rkaelle.com/assets/ryan_headshot.jpg",
         "sameAs": [
-            "http://ryankaelle.dev",
+            "http://rkaelle.com",
             "http://linkedin.com/in/ryan-kaelle",
             "http://github.com/rkaelle"
         ]
