@@ -35,8 +35,10 @@ class SidebarNav extends React.Component {
       section.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
+  
 
   render() {
+    const isMobile = window.innerWidth < 600;
     const { expanded } = this.state;
     return (
       <div className="sidebar-nav">
@@ -72,18 +74,19 @@ class SidebarNav extends React.Component {
             </Sidenav.Body>
           </Sidenav>
         )}
+
         <div className="sidebar-logos">
           <a href="mailto:rkaelle2@gmail.com">
-            <EmailRoundedIcon style={{ fontSize: 20 }} />
+            <EmailRoundedIcon style={{ fontSize: isMobile ? 35 : 20 }} />
           </a>
           <a href="https://github.com/rkaelle">
-            <GitHubIcon style={{ fontSize: 19 }} />
+            <GitHubIcon style={{ fontSize: isMobile ? 34 : 19 }} />
           </a>
           <a href="https://www.linkedin.com/in/ryan-kaelle/">
-            <LinkedInIcon style={{ fontSize: 21 }} />
+            <LinkedInIcon style={{ fontSize: isMobile ? 36 : 21 }} />
           </a>
           <a href="https://x.com/KaelleRyan">
-            <XIcon style={{ fontSize: 21 }} />
+            <XIcon style={{ fontSize: isMobile ? 36 : 21 }} />
           </a>
         </div>
       </div>

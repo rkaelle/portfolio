@@ -78,23 +78,23 @@ img {
 @media only screen and (max-width: 600px) {
   .sidebar-nav {
     top: 0;
-    height: top; /* Adjust height to be just enough for the logos */
-    justify-content: flex-end; /* Align logos to the right */
-    padding-right: 20px; /* Spacing from the right edge */
+    height: top; 
+    justify-content: flex-end; 
+    padding-right: 20px; 
   }
 
   .sidebar-links, .sidebar-link-text {
-    display: none; /* Hide text links */
+    display: none; 
   }
 
   .sidebar-logos {
     display: flex;
-    align-items: center; /* Center logos vertically */
-    width: auto; /* Auto width to minimize space */
-    padding-left: 0; /* Remove padding */
+    align-items: center; 
+    width: auto;
+    padding-left: 0;
   }
 
   img {
-    height: 24px; /* Adjust logo size appropriately */
+    height: 24px; 
   }
 }

@@ -40,7 +40,7 @@ class SocialsPage extends React.Component {
             <EmailRoundedIcon className="social-icon" />
             <span>Email</span>
           </a>
-          <a href="https://t.me/rkaelle" className="social-link">
+          <a href="https://t.me/ryankaelle" className="social-link">
             <TelegramIcon className="social-icon" />
             <span>Telegram</span>
           </a>
