@@ -67,9 +67,6 @@ class SidebarNav extends React.Component {
                 <FadeInSection delay="500ms">
                   <div><Link to="/manage">/manage daily news</Link></div>
                 </FadeInSection>
-                <FadeInSection delay="500ms">
-                  <div><Link to="/gallery">/gallery</Link></div>
-                </FadeInSection>
               </div>
             </Sidenav.Body>
           </Sidenav>

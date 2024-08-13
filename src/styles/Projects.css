@@ -18,6 +18,7 @@
 }
 
 .projects-card {
+  background-color: var(--light-navy);
   position: relative;
   cursor: default;
   display: flex;
@@ -109,7 +110,8 @@
   max-width: 500px;
   right: 25% !important;
   left: 25% !important;
-  bottom: 15% !important;
+  top: 25% !important;
+  bottom: unset !important;
   user-select: none;
 }
 
@@ -135,6 +137,42 @@
 
 .carousel-indicators .active {
   background-color: var(--pink-bright);
+}
+
+.portfolio-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--light-navy);
+  border-radius: 16px;
+  padding: 2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+.portfolio-button:hover {
+  background-color: var(--lightest-navy);
+}
+
+.portfolio-button .card-title {
+  color: var(--lightest-slate);
+  font-size: 27px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrow-icon {
+  margin-left: 8px;
+  font-size: 24px;
+  transition: transform 0.3s ease;
+  color: var(--pink-bright);
+}
+
+.portfolio-button:hover .arrow-icon {
+  transform: translateX(5px);
 }
 
 @media only screen and (max-width: 600px) {

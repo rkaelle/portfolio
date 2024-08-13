@@ -5,6 +5,8 @@ import FadeInSection from "./FadeInSection";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import Carousel from "react-bootstrap/Carousel";
 import ExternalLinks from "./ExternalLinks";
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+
 
 class Projects extends React.Component {
   constructor() {
@@ -31,14 +33,14 @@ class Projects extends React.Component {
         open: "",
         image: "/assets/chessboard.png"
       },
-      "2bit cpu": {
-        title: "2-Bit CPU",
+      "Sentiment Analysis Bot": {
+        title: "Sentiment Analysis Bot",
         desc:
-          "2 bit ALU circuit that uses inverters, AND, OR gate, Ex-or gate and a multiplexer. It takes two input bits.",
+          "Sentiment analysis on Reddit posts and comments to gauge public opinion on various stocks.",
         techStack: "Chips, Wiring",
         link: "",
-        open: "https://www.cs.uregina.ca/Links/class-info/301/cpu1bit/lectureLS.html",
-        image: "/assets/cpu.jpg"
+        open: "https://github.com/rkaelle/sentiment-analysis-bot",
+        image: "/assets/gauges.png"
       },
       "Ham radio station": {
         title: "Amateur Radio Station",
@@ -57,31 +59,45 @@ class Projects extends React.Component {
         link: "",
         open: "",
         image: "/assets/drones.jpg"
-      },"Clustered Raspberry ": {
-        title: "Clustered Raspberry Pi",
+      },
+      "Chatroom": {
+        title: "Secure Chatroom",
         desc:
-          "include NAS file storage, personal homelab, and micro supercomputer",
-        techStack: "Raspian, Clustering, Microcomputers",
+          "Flask-based real-time secure messaging app.",
+        techStack: "Flask, Socket-IO, Ngrok",
+        link: "",
+        open: "https://github.com/rkaelle/rk-chatroom",
+        image: "/assets/chatroom–screenshot.png"
+      },
+      "Rocket Sensor": {
+        title: "Rocket Sensor Development",
+        desc: "Developed a sophisticated sensor system for a model rocket to investigate atmospheric conditions and flight dynamics.",
+        techStack: "PCB, Sensors, Data Analysis",
         link: "",
         open: "",
-        image: "/assets/cluster.jpeg"
-      }/*,"FPV drone": {
-        title: "Software Defined Radio for phones",
-        desc:
-          "A small JS library that helps with clear and succinct data presentation.",
-        techStack: "NODE.JS (EXPRESS.JS)",
-        link: "",
-        open: "",
-        image: "/assets/portfolio.png"
-      }*/
+        image: "/assets/rocket.jpeg"
+      }
     };
+
     const projects = {
-      "RK coin": {
-        desc:
-          "A derivation of the parent coins Bitcoin and Litecoin but with a twist.",
-        techStack: "C++, Python, Solidity, Blockchain",
-        link: "https://github.com/rkaelle/rk-coin",
+      "Sentiment Analysis Bot": {
+        desc: "Performs sentiment analysis on Reddit posts and comments to gauge public opinion on various stocks.",
+        techStack: "Python, NLP, Plotly",
+        link: "https:/github.com/rkaelle/sentiment-analysis-bot",
         open: ""
+      },
+      "This site! (My Portfolio)": {
+        desc:
+          "Built using ReactJS. This site serves as a place to show off my current updates",
+        techStack: "ReactJS, MaterualUI, ThreeJs, Firebase",
+        link: "https://github.com/rkaelle/portfolio",
+        open: "https://rkaelle.com"
+      },
+      "RyansDailyNews": {
+        desc: "A Python script that fetches the latest events, reflections, skills, and science facts to send personalized daily emails to subscribers.",
+        techStack: "Python, API, SMTP, Firebase",
+        link: "https:/github.com/rkaelle/ryansdailynews",
+        open: "https:/rkaelle.com/manage"
       },
       "RK chat": {
         desc:
@@ -90,92 +106,86 @@ class Projects extends React.Component {
         link: "https://github.com/rkaelle/rk-chatroom",
         open: ""
       },
-      "Algorithmic Trading": {
+      "Skills Tracker": {
         desc:
-          "A series of programs built from YFinance Data, Quantconnect Lean Engine, and Pandas",
-        techStack: "Python, QuantConnect, Pandas, Numpy, Matplotlib ",
-        link:
-          "https://github.com/rkaelle/algo-trading-strategies",
-          open: "https://www.udemy.com/course/python-for-finance-and-algorithmic-trading-with-quantconnect/"
+          "React web application with Firebase firestore data hosting that allows users to log their skills and accomplishments",
+        techStack: "React, Firebase, Firestore",
+        link: "https://github.com/rkaelle/skills-tracker",
+        open: "https://stats-tracker-tau.vercel.app/"
       },
-      "This site! (My Portfolio)": {
-        desc:
-          "Built using ReactJS. This site serves as a place to show off my current updates",
-        techStack: "ReactJS, MaterualUI",
-        link: "https://github.com/rkaelle/portfolio",
-        open: "https://ryankaelle.dev"
-      },
-      "Raspberry Pi flight tracker (ADS-B station)": {
-        desc:
-          "Using intercepted Software Defined Raadio waves, I am able to track planes up to 200 miles away.",
-        techStack: " RTL-SDR",
+      "View Full Portfolio": {
+        desc: "",
+        techStack: "",
         link: "",
-        open: ""
-      },"Built an autonomous quadcopter with ArduPilot control software": {
-        desc:
-          "Able to respond accordingly given GPS input. Uses camera, gyroscope, and accelerometer to determine best route.",
-        techStack: "ArduPilot, Drones, CLI",
-        link: "",
-        open: ""
+        open: "/projects"
       }
-
     };
 
     return (
       <div id="projects">
-        <div className="section-header ">
+        <div className="section-header">
           <span className="section-title">/ creations</span>
         </div>
         <Carousel>
           {Object.keys(spotlightProjects).map((key, i) => (
-            <Carousel.Item>
-              <img
-                className="d-block w-100"
-                src={spotlightProjects[key]["image"]}
-                alt={key}
-              />
-              <div className="caption-bg">
-                <Carousel.Caption>
-                  <h3>{spotlightProjects[key]["title"]}</h3>
-                  <p>
-                    {spotlightProjects[key]["desc"]}
-                    <p className="techStack">
-                      {spotlightProjects[key]["techStack"]}
-                    </p>
-                  </p>
-                  <ExternalLinks
-                    githubLink={spotlightProjects[key]["link"]}
-                    openLink={spotlightProjects[key]["open"]}
-                  ></ExternalLinks>
-                </Carousel.Caption>
-              </div>
-            </Carousel.Item>
+            <Carousel.Item key={i}>
+            <img
+  className="d-block w-100"
+  src={spotlightProjects[key]["image"]}
+  alt={key}
+/>
+<Carousel.Caption>
+  <div className="carousel-item-content">
+    <h3>{spotlightProjects[key]["title"]}</h3>
+    <p>
+      {spotlightProjects[key]["desc"]}
+      <p className="techStack">
+        {spotlightProjects[key]["techStack"]}
+      </p>
+    </p>
+    <ExternalLinks
+      githubLink={spotlightProjects[key]["link"]}
+      openLink={spotlightProjects[key]["open"]}
+    ></ExternalLinks>
+  </div>
+</Carousel.Caption>
+          </Carousel.Item>
           ))}
         </Carousel>
         <div className="project-container">
-          <ul className="projects-grid">
-            {Object.keys(projects).map((key, i) => (
-              <FadeInSection delay={`${i + 1}00ms`}>
-                <li className="projects-card">
-                  <div className="card-header">
-                    <div className="folder-icon">
-                      <FolderOpenRoundedIcon
-                        style={{ fontSize: 35 }}
-                      ></FolderOpenRoundedIcon>
-                    </div>
-                    <ExternalLinks
-                      githubLink={projects[key]["link"]}
-                      openLink={projects[key]["open"]}
-                    ></ExternalLinks>
-                  </div>
-
-                  <div className="card-title">{key}</div>
-                  <div className="card-desc">{projects[key]["desc"]}</div>
-                  <div className="card-tech">{projects[key]["techStack"]}</div>
-                </li>
-              </FadeInSection>
-            ))}
-          </ul>
+        <ul className="projects-grid">
+  {Object.keys(projects).map((key, i) => (
+    <FadeInSection delay={`${i + 1}00ms`} key={i}>
+      {key === "View Full Portfolio" ? (
+        <li className="projects-card portfolio-button">
+          <a href={projects[key]["open"]} target="_blank" rel="noopener noreferrer">
+            <div className="card-title">
+              Click here to see my full portfolio
+              <ArrowForwardIcon className="arrow-icon" />
+            </div>
+          </a>
+        </li>
+      ) : (
+        <li className="projects-card">
+          <div className="card-header">
+            <div className="folder-icon">
+              <FolderOpenRoundedIcon
+                style={{ fontSize: 35 }}
+              ></FolderOpenRoundedIcon>
+            </div>
+            <ExternalLinks
+              githubLink={projects[key]["link"]}
+              openLink={projects[key]["open"]}
+            ></ExternalLinks>
+          </div>
+          <div className="card-title">{key}</div>
+          <div className="card-desc">{projects[key]["desc"]}</div>
+          <div className="card-tech">{projects[key]["techStack"]}</div>
+        </li>
+      )}
+    </FadeInSection>
+  ))}
+</ul>
         </div>
       </div>
     );

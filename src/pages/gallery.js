@@ -17,35 +17,38 @@ const GalleryPage = () => {
             try {
                 const storageRef = ref(storage, 'photos/');
                 const listResult = await listAll(storageRef);
-
+    
                 console.log('listResult:', listResult);
-
+    
                 const photoDataPromises = listResult.items.map(async (item) => {
                     try {
                         const url = await getDownloadURL(item);
                         const metadata = await getMetadata(item);
-
-                        console.log('URL:', url);
-                        console.log('Metadata:', metadata);
-
-                        return {
-                            src: url,
-                            width: metadata.width || 4,  // Provide default width if not available
-                            height: metadata.height || 3 // Provide default height if not available
-                        };
+    
+                        // Only include items that have a content type starting with 'image/'
+                        if (metadata.contentType && metadata.contentType.startsWith('image/')) {
+                            return {
+                                src: url,
+                                width: metadata.width || 4,  // Provide default width if not available
+                                height: metadata.height || 3 // Provide default height if not available
+                            };
+                        } else {
+                            // Skip non-image files
+                            return null;
+                        }
                     } catch (itemError) {
                         console.error('Error fetching item data:', itemError);
-                        return null; // Skip this item if an error occurs
+                        return null;
                     }
                 });
-
+    
                 const photoData = await Promise.all(photoDataPromises);
-
+    
                 // Filter out any null values
                 const validPhotoData = photoData.filter(photo => photo !== null);
-
+    
                 console.log('photoData:', validPhotoData);
-
+    
                 setPhotos(validPhotoData);
             } catch (fetchError) {
                 console.error('Error fetching photos:', fetchError);
@@ -54,7 +57,7 @@ const GalleryPage = () => {
                 setLoading(false);
             }
         };
-
+    
         fetchPhotos();
     }, []);
 

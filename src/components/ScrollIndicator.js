@@ -26,7 +26,7 @@ const ScrollIndicator = () => {
         left: 0,
         width: `${scrollProgress}%`,
         height: '3px',
-        backgroundColor: "#e0c709",
+        backgroundColor: 'var(--pink-bright)',
         zIndex: 10000,
       }}
     />
