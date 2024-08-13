@@ -117,7 +117,7 @@ class Projects extends React.Component {
         desc: "",
         techStack: "",
         link: "",
-        open: "/projects"
+        open: "/#/projects"
       }
     };
 
