@@ -80,6 +80,12 @@ class Projects extends React.Component {
     };
 
     const projects = {
+      "WiBit": {
+        desc: "A decentralized Wi-Fi network that rewards users for reducing bandwidth during congestion periods using WiBit tokens. Users can monitor network usage and manage their Solana wallet directly from the platform.",
+        techStack: "React.js, Python, Solana, Firestore, Three.js",
+        link: "",
+        open: "wibit.online"
+      },
       "Sentiment Analysis Bot": {
         desc: "Performs sentiment analysis on Reddit posts and comments to gauge public opinion on various stocks.",
         techStack: "Python, NLP, Plotly",
@@ -105,13 +111,6 @@ class Projects extends React.Component {
         techStack: "Python, JavaScript, CSS, HTML, ",
         link: "https://github.com/rkaelle/rk-chatroom",
         open: ""
-      },
-      "Skills Tracker": {
-        desc:
-          "React web application with Firebase firestore data hosting that allows users to log their skills and accomplishments",
-        techStack: "React, Firebase, Firestore",
-        link: "https://github.com/rkaelle/skills-tracker",
-        open: "https://stats-tracker-tau.vercel.app/"
       },
       "View Full Portfolio": {
         desc: "",
