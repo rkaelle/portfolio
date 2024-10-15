@@ -84,7 +84,7 @@ class Projects extends React.Component {
         desc: "A decentralized Wi-Fi network that rewards users for reducing bandwidth during congestion periods using WiBit tokens. Users can monitor network usage and manage their Solana wallet directly from the platform.",
         techStack: "React.js, Python, Solana, Firestore, Three.js",
         link: "",
-        open: "wibit.online"
+        open: "https://wibit.online"
       },
       "Sentiment Analysis Bot": {
         desc: "Performs sentiment analysis on Reddit posts and comments to gauge public opinion on various stocks.",
