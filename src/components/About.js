@@ -19,7 +19,7 @@ class About extends React.Component {
   render() {
     const one = (
       <p>
-        I am currently an incoming Sophomore at <a href="https://eecs.engin.umich.edu/"> the University of Michigan</a>, looking to work in electrical engineering, fintech,and crypto.  I’m fascinated by technical, large scale products that are changing the technological landscape. I’ve been lucky enough to work on some pretty interesting projects while also learning about outside topics to expand my skills.
+        I am currently a Sophomore at <a href="https://eecs.engin.umich.edu/"> the University of Michigan</a>, looking to work in electrical engineering, fintech,and crypto.  I’m fascinated by technical, large scale products that are changing the technological landscape. I’ve been lucky enough to work on some pretty interesting projects while also learning about outside topics to expand my skills.
         
       </p>
     );
