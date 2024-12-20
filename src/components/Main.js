@@ -11,7 +11,8 @@ import LoginPage from '../pages/LoginPage';
 import UploadPage from '../pages/UploadPage';
 import SocialsPage from '../pages/SocialsPage';
 import PrivateRoute from './PrivateRoute';
-import PhotoManagerPage from '../pages/PhotoManagerPage';
+import Mom_DadPage from '../pages/Mom_DadPage';
+import Grammie_PoppiePage from '../pages/Grammie_Poppie';
 
 const Main = () => {
   return (
@@ -22,7 +23,8 @@ const Main = () => {
         <Route exact path='/gallery' component={GalleryPage} />
         <Route exact path='/projects' component={Projects} />
         <Route exact path='/login' component={LoginPage} />
-        <Route exact path='/PhotoManagerPage' component={PhotoManagerPage} />
+        <Route exact path='/Mom_Dad' component={Mom_DadPage} />
+        <Route exact path='/Grammie_Poppie' component={Grammie_PoppiePage} />
         <Route exact path='/socials' component={SocialsPage} />
         <PrivateRoute path="/upload" component={UploadPage} />
         <Route component={ErrorPage} />
