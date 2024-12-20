@@ -1,0 +1,134 @@
+/* src/styles/PhotoManagerPage.css */
+
+.PhotoManager {
+    background-color: var(--navy);
+    min-height: 100vh;
+    color: white;
+  }
+  
+  
+  .h2 {
+    color: white;
+    margin-bottom: 1rem;
+  }
+
+  .Button {
+    padding: 10px 20px;
+    width: 100%;
+    border-radius: 10px;
+    background-color: var(--pink-bright);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border: none;
+  }
+  
+  .Button:hover {
+    background-color: #e0c70972;
+  }
+  
+  .message-container {
+    height: 50px;
+    margin-bottom: 1rem;
+  }
+  
+  .message {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    color: #fff;
+    text-align: center;
+  }
+  
+  .message.error {
+    background-color: #f44336;
+  }
+  
+  .message.success {
+    background-color: #4CAF50;
+  }
+  
+  .photo-manager {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logout-button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #f44336;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .logout-button:hover {
+    background-color: #d32f2f;
+  }
+  
+  .upload-section,
+  .photos-section {
+    margin-top: 2rem;
+  }
+  
+  .photos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .photo-card {
+    position: relative;
+  }
+  
+  .photo {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+  
+  .delete-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 5px 10px;
+    border: none;
+    background-color: rgba(244, 67, 54, 0.8);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .delete-button:hover {
+    background-color: rgba(244, 67, 54, 1);
+  }
+  
+  @media only screen and (max-width: 600px) {
+    .form,
+    .photo-manager {
+      padding: 1rem;
+    }
+  
+    .input,
+    .Button {
+      padding: 8px 15px;
+    }
+  
+    .h2,
+    .upload-section h3,
+    .photos-section h3 {
+      font-size: 1.2rem;
+    }
+  
+    .photos-grid {
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+  }
