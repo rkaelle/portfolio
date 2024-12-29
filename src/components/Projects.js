@@ -33,6 +33,15 @@ class Projects extends React.Component {
         open: "",
         image: "/assets/chessboard.png"
       },
+          "Smart Eink Photo Display": {
+        title: "Smart e-Paper Photo Display",
+        desc:
+          "A Python-based smart photo frame for managing and displaying images and real-time clocks on an e-Paper display.",
+        techStack: "Python, Firebase Firestore, Firebase Storage, 3D Printing, CAD",
+        link: "https://github.com/rkaelle/einkphotoalbumn",
+        open: "https://www.thingiverse.com/thing:6891829",
+        image: "/assets/eink.JPG"
+      },
       "Sentiment Analysis Bot": {
         title: "Sentiment Analysis Bot",
         desc:
@@ -86,31 +95,29 @@ class Projects extends React.Component {
         link: "",
         open: "https://wibit.online"
       },
+      "GreekLink": {
+        desc: "A full-stack web application for enhancing fraternity and sorority news. Features real-time search, secure Firebase Firestore backend, authentication, and scraped forum data with 35,000+ posts.",
+        techStack: "Next.js, React, TypeScript, Firebase Firestore, Python",
+        link: "https://github.com/rkaelle/greeklink",
+        open: "https://greeklink.xyz"
+      },
       "Sentiment Analysis Bot": {
-        desc: "Performs sentiment analysis on Reddit posts and comments to gauge public opinion on various stocks.",
-        techStack: "Python, NLP, Plotly",
+        desc: "A Python-based tool that analyzes sentiment from Reddit posts and comments to gauge public opinion on various stocks. It leverages Natural Language Processing (NLP) techniques for sentiment scoring and visualizes insights using interactive gauges created with Plotly.",
+        techStack: "Python, NLP, PRAW, NLTK, Matplotlib, Plotly",
         link: "https:/github.com/rkaelle/sentiment-analysis-bot",
         open: ""
       },
-      "This site! (My Portfolio)": {
-        desc:
-          "Built using ReactJS. This site serves as a place to show off my current updates",
-        techStack: "ReactJS, MaterualUI, ThreeJs, Firebase",
-        link: "https://github.com/rkaelle/portfolio",
-        open: "https://rkaelle.com"
+      "Pipelined Assembly Datapath Simulator": {
+        desc: "A C-based simulator for a 5-stage assembly code pipeline, integrating data forwarding, branch prediction, and hazard resolution. Simulates all pipeline stages and optimizes control and memory operations.",
+        techStack: "C, Assembly, Branch Prediction, Pipeline Simulation",
+        link: "https://github.com/rkaelle/assembly-pipeline-simulator",
+        open: ""
       },
       "RyansDailyNews": {
         desc: "A Python script that fetches the latest events, reflections, skills, and science facts to send personalized daily emails to subscribers.",
         techStack: "Python, API, SMTP, Firebase",
         link: "https:/github.com/rkaelle/ryansdailynews",
         open: "https:/rkaelle.com/manage"
-      },
-      "RK chat": {
-        desc:
-          "A Python (Flask) based web app intended to be hosted on a laptop.",
-        techStack: "Python, JavaScript, CSS, HTML, ",
-        link: "https://github.com/rkaelle/rk-chatroom",
-        open: ""
       },
       "View Full Portfolio": {
         desc: "",

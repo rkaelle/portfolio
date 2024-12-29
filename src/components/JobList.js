@@ -22,6 +22,16 @@ const JobList = () => {
 
   const experienceItems = {
     "Technical": {
+      "Z Lab": {
+        jobTitle: "Swarm Intelligence Robotics Research",
+        duration: "January 2024 - Present",
+        desc: [
+          "Designed servo and control systems with analog-to-digital feedback for real-time reactions and enhanced stability.",
+          "Engineered PCBs (Altium) and wiring harnesses for accelerometers, ADCs, infrared sensors, and power distribution.",
+          "Developed Python mobility algorithms using ROSS on Raspberry Pi, enabling wireless control and autonomous navigation.",
+          "Led the controls team, designing algorithms and coordinating multidisciplinary efforts to deliver standardized components."
+        ],
+      },
       "JoinMe": {
         jobTitle: "Intern SWE",
         duration: "June 2023 - Present",
@@ -30,15 +40,6 @@ const JobList = () => {
           "Brainstormed and prototyped user experience (UX) layouts",
           "Implemented Biking activity into app, Deploying React Native, Go, and SQL",
           "Leveraged enterprise team coding practices (ex. Scrum board), created \"Help Center\", \"Settings\", and \"Messages\" pages"
-        ],
-      },
-      "Z Lab": {
-        jobTitle: "Swarm Intelligence Robotics Research",
-        duration: "January 2024 - Present",
-        desc: [
-          "Design and implement location and contact sensors (UWB, proximity, accelerometer, etc.)",
-          "Review literature on miniature locomotion mechanisms; Design, manufacture, and test the atombot platform",
-          "Designed PCB and circuit design (Altium) and fabrication; developed 3D printing, laser cutter, milling machine, soldering, etc skills; programming with C/C++/Python; 3D CAD design (SolidWorks)"
         ],
       },
       "HELIOS": {

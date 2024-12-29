@@ -4,6 +4,7 @@
   padding-right: 25%;
   min-height: 60vh;
   padding-top: 20px;
+  margin-top: 50px;
 }
 
 .projects-grid {
@@ -36,12 +37,17 @@
 }
 
 .card-header {
+  background-color: transparent;
   margin-top: -20px;
   display: flex;
   padding: 1.3em 0 !important;
   flex-direction: row;
   justify-content: space-between;
   border-bottom: none !important;
+}
+
+.projects-card .card-header {
+  background-color: transparent !important;
 }
 .folder-icon {
   color: var(--pink-bright);

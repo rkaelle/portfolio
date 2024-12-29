@@ -5,18 +5,23 @@
   padding-left: 15%;
   padding-top: 0.02%;
   min-height: 80vh;
+  position: relative;
 }
 
 .Typist {
   color: var(--pink-bright);
   text-align: center;
-  font-size: 76px;
+  font-size: 86px;
   margin-top: -30px;
 }
 .Typist .Cursor--blinking {
-  padding-left: 4px;
+  padding-left: 5px; 
+  color: var(--pink-bright);
+  vertical-align: middle;
+  position: relative;
+  top: -15px;
+  animation: blink 1s step-end infinite;
 }
-
 .intro_pic img {
   max-width: 170px;
   padding-bottom: 10%;
@@ -50,8 +55,9 @@
   font-family: "NTR", sans-serif;
   font-size: 22px;
   max-width: 40%;
-  text-align: justify;
   padding-bottom: 50px;
+  letter-spacing: normal; /* Ensure default spacing */
+  word-spacing: normal; /* Ensure default word spacing */
 }
 
 .intro-contact {
@@ -74,6 +80,46 @@
 
 b {
   font-size: 17px;
+}
+
+
+.scroll-indicator {
+  position: absolute;
+  bottom: -5%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 5;
+}
+
+.scroll-indicator.fade-out {
+  opacity: 0;
+}
+
+.scroll-indicator .arrow {
+  width: 20px;
+  height: 20px;
+  border-left: 2px solid var(--pink-bright);
+  border-bottom: 2px solid var(--pink-bright);
+  transform: rotate(-45deg);
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0) rotate(-45deg);
+  }
+  40% {
+    transform: translateY(5px) rotate(-45deg);
+  }
+  60% {
+    transform: translateY(3px) rotate(-45deg);
+  }
 }
 
 @media only screen and (max-width: 600px) {
@@ -114,4 +160,10 @@ b {
     align-self: center;
     margin-left: 30%;
   }
+
+  .scroll-indicator {
+    display: none;
+  }
+
 }
+

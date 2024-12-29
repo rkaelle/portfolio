@@ -19,7 +19,7 @@ class About extends React.Component {
   render() {
     const one = (
       <p>
-        I am currently a Sophomore at <a href="https://eecs.engin.umich.edu/"> the University of Michigan</a>, looking to work in electrical engineering, fintech,and crypto.  I’m fascinated by technical, large scale products that are changing the technological landscape. I’ve been lucky enough to work on some pretty interesting projects while also learning about outside topics to expand my skills.
+        I am currently a Sophomore at <a href="https://eecs.engin.umich.edu/"> the University of Michigan</a>, looking to work in hardware engineering, full stack development, and crypto.  I’m fascinated by technical, large scale products that are changing the technological landscape. I’ve been lucky enough to work on some pretty interesting projects and pick up some cool skills along the way :)
         
       </p>
     );
@@ -35,17 +35,16 @@ class About extends React.Component {
       "AI/ML", 
       "RF Devices",
       "Algorithmic Trading",
-      "Additive Manufacturing"
-      
+      "3D Printing"
     ];
 
     const language_stack = [
       "Python",
       "C++",
       "MATLAB",
-      "React.js",
-      "SQL",
-      "Typescript"
+      "JS",
+      "Solidity",
+      "Verilog"
     ]
 
     return (

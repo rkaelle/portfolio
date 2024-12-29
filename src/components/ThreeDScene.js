@@ -36,6 +36,7 @@ const Text = () => {
 
       const material = new THREE.MeshStandardMaterial({ color: color });
       const mesh = new THREE.Mesh(textGeometry, material);
+      
       mesh.rotation.y = -THREE.MathUtils.degToRad(60);
       if (meshRef.current) {
         meshRef.current.add(mesh);
@@ -60,7 +61,7 @@ const ThreeDScene = () => (
       <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
       <pointLight position={[-10, -10, -10]} />
       <Text />
-      <OrbitControls />
+      <OrbitControls enableRotate={false} enableZoom={false} enablePan={false} />
     </Canvas>
   </div>
 );

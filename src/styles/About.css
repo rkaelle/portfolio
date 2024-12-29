@@ -42,7 +42,7 @@
 .about-description {
   font-family: "NTR", sans-serif;
   color: var(--slate);
-  max-width: 600px;
+  
   font-size: 22px;
   text-align: justify;
   margin: 0;
@@ -80,10 +80,6 @@
   }
 }
 
-.ryan_portrait:hover {
-  transform: translateY(-5px);
-
-}
 
 @media only screen and (max-width: 600px) {
   #about {
