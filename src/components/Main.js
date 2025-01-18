@@ -13,6 +13,7 @@ import SocialsPage from '../pages/SocialsPage';
 import PrivateRoute from './PrivateRoute';
 import Mom_DadPage from '../pages/Mom_DadPage';
 import Grammie_PoppiePage from '../pages/Grammie_Poppie';
+import OrderPage from '../pages/OrderPage';
 
 const Main = () => {
   return (
@@ -27,6 +28,7 @@ const Main = () => {
         <Route exact path='/Grammie_Poppie' component={Grammie_PoppiePage} />
         <Route exact path='/socials' component={SocialsPage} />
         <PrivateRoute path="/upload" component={UploadPage} />
+        <Route exact path="/order" component={OrderPage} />
         <Route component={ErrorPage} />
       </Switch>
     </Router>
