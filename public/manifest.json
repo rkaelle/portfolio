@@ -1,0 +1,17 @@
+{
+  "name": "Ryan Kaelle | Personal Portfolio",
+  "short_name": "Ryan Kaelle",
+  "description": "Personal portfolio showcasing my projects and skills in software development.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a1b26",
+  "theme_color": "#1a1b26",
+  "icons": [
+    {
+      "src": "/icons/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon",
+      "purpose": "any"
+    }
+  ]
+} 
