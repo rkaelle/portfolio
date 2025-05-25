@@ -1,20 +1,29 @@
-import { initializeApp } from 'firebase/app';
+'use client';
+
+import { initializeApp, getApps } from 'firebase/app';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { getStorage } from 'firebase/storage';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCnrX1zznSun6Kzna9DHKpsYWhdg_ukcqQ",
-    authDomain: "ryansdailynews-7df9d.firebaseapp.com",
-    databaseURL: "https://ryansdailynews-7df9d-default-rtdb.firebaseio.com",
-    projectId: "ryansdailynews-7df9d",
-    storageBucket: "ryansdailynews-7df9d.appspot.com",
-    messagingSenderId: "1054342648575",
-    appId: "1:1054342648575:web:5ab56429df6f474095b2ca",
-    measurementId: "G-YC3ZE3KKTT"
+    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+    measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
-const app = initializeApp(firebaseConfig);
+// Initialize Firebase only if it hasn't been initialized already
+let app;
+try {
+    app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+} catch (error) {
+    console.error('Error initializing Firebase:', error);
+    throw error;
+}
+
 const db = getFirestore(app);
 const auth = getAuth(app);
 const storage = getStorage(app);

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ref, listAll, getDownloadURL, getMetadata } from 'firebase/storage';
-import { storage } from '../components/firebase'; 
+import { storage } from '../lib/firebase'; 
 import { CommandLineIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
 import TypewriterText from '@/app/components/TypewriterText';
 import "../styles/Gallery.css";
