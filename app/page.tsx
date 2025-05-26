@@ -201,6 +201,7 @@ const Home = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.4 }}
+                  className="relative z-50"
                 >
                   <HeroTypewriter />
                 </motion.div>
@@ -266,7 +267,7 @@ const Home = () => {
 
           {/* Decorative Elements */}
           <motion.div 
-            className="absolute top-1/4 right-8 mt-[-10vh] sm:mt-0"
+            className="absolute top-1/4 right-8 mt-[-10vh] sm:mt-0 z-40"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2 }}
