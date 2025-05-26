@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from 'next';
 import React from 'react';
 import { Inter } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/react';
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
     siteName: 'Ryan Kaelle',
     images: [
       {
-        url: '/og-image.png',
+        url: '/assets/ryankaelle_cropped.png',
         width: 1200,
         height: 630,
         alt: 'Ryan Kaelle - Hardware Engineer & Software Developer'
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Ryan Kaelle - Hardware Engineer & Software Developer',
     description: 'Ryan Kaelle is a hardware engineer and software developer at the University of Michigan. Specializing in hardware engineering, full stack development, and blockchain technology.',
-    images: ['/og-image.png'],
+    images: ['/assets/ryankaelle_cropped.png'],
   },
   icons: {
     icon: '/icons/favicon.ico',
@@ -61,6 +62,7 @@ export default function RootLayout({
         <div className="scanline" />
         {children}
         <Analytics />
+        <GoogleAnalytics gaId="G-0EBMRW3QEB" />
       </body>
     </html>
   );
