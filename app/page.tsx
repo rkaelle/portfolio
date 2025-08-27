@@ -13,17 +13,18 @@ import LastCommit from './components/LastCommit';
 
 const techStack = [
   "Embedded Systems",
-  "Hardware Design",
-  "High-Performance Computing",
+  "RF & Wireless",
   "FPGA & Digital Logic",
-  "Blockchain",
-  "Cloud + Edge",
+  "Distributed Systems & Cloud Security",
+  "On-Chain Systems (Solana & EVM)",
+  "Embedded Linux & Edge",
   "3D Printing"
 ];
 
 const languageStack = [
   "C/C++",
   "Python",
+  "Rust",
   "JavaScript (React • Next.js)",
   "Verilog/VHDL",
   "Assembly",
@@ -201,7 +202,7 @@ const Home = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.4 }}
-                  className="relative z-50"
+                  className="relative"
                 >
                   <HeroTypewriter />
                 </motion.div>
@@ -267,7 +268,7 @@ const Home = () => {
 
           {/* Decorative Elements */}
           <motion.div 
-            className="absolute top-1/4 right-8 mt-[-10vh] sm:mt-0 z-40"
+            className="absolute top-1/4 right-8 mt-[-10vh] sm:mt-0 z-10"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2 }}
@@ -302,7 +303,7 @@ const Home = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <div className="space-y-6">
                   <p className="text-cyber-white/80">
-                    Hey, I'm <span className="text-neon-blue">Ryan</span> — a incoming Junior @ the University of Michigan who can't decide whether
+                    Hey, I'm <span className="text-neon-blue">Ryan</span> — a incoming Junior at the University of Michigan who can't decide whether
                     I love solder fumes or compiler errors more. Most days you'll find me swapping chips on a PCB, teaching swarm robots new tricks, or writing Solidity that (hopefully) doesn't
                     set fire to a testnet.
                   </p>
@@ -311,7 +312,7 @@ const Home = () => {
                     I hang out with the <span className="text-neon-blue">Michigan Blockchain</span> crew,
                     tinker on a hydrogen-electric plane at Helios, and riff on side projects like&nbsp;
                     <em>WiBit</em> (Decentralized Wi-Fi), <em>Validata</em> (token-gated AI data),
-                    and a from-scratch STM32 smartwatch that somehow still boots.
+                    and a from-scratch STM32 smartwatch that boots reliably.
                     Basically, if it blends hardware, code, and sometimes a bit of crypto chaos, I'm in.
                   </p>
 
@@ -321,42 +322,62 @@ const Home = () => {
                     and a branch called "/experiments". Got a wild idea? Let's build it.
                   </p>
                 </div>
-                <div>
-                  <h3 className="text-xl font-tech text-matrix-green mb-4">Technologies</h3>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <h4 className="text-neon-blue mb-2">Focus Areas</h4>
-                      <ul className="space-y-2">
-                        {techStack.map((tech, i) => (
-                          <motion.li
-                            key={tech}
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ delay: i * 0.1 }}
-                            className="flex items-center gap-2 text-cyber-white/70"
-                          >
-                            <CircleStackIcon className="w-4 h-4 text-matrix-green" />
-                            {tech}
-                          </motion.li>
-                        ))}
-                      </ul>
+                <div className="space-y-8">
+                  {/* Profile Photo */}
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.2 }}
+                    className="flex justify-center"
+                  >
+                    <div className="relative">
+                      <img
+                        src="/assets/ryan_hiking.jpeg"
+                        alt="Ryan Kaelle"
+                        className="w-44 h-44 md:w-52 md:h-52 rounded-lg object-cover border-2 border-neon-blue/30 shadow-[0_0_20px_rgba(0,128,255,0.3)] hover:shadow-[0_0_30px_rgba(0,128,255,0.5)] transition-all duration-300"
+                      />
+                      <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-neon-blue/10 to-transparent pointer-events-none" />
                     </div>
-                    <div>
-                      <h4 className="text-neon-blue mb-2">Languages</h4>
-                      <ul className="space-y-2">
-                        {languageStack.map((lang, i) => (
-                          <motion.li
-                            key={lang}
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ delay: i * 0.1 }}
-                            className="flex items-center gap-2 text-cyber-white/70"
-                          >
-                            <CodeBracketIcon className="w-4 h-4 text-matrix-green" />
-                            {lang}
-                          </motion.li>
-                        ))}
-                      </ul>
+                  </motion.div>
+
+                  <div>
+                    <h3 className="text-xl font-tech text-matrix-green mb-4">Technologies</h3>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <h4 className="text-neon-blue mb-2">Focus Areas</h4>
+                        <ul className="space-y-2">
+                          {techStack.map((tech, i) => (
+                            <motion.li
+                              key={tech}
+                              initial={{ opacity: 0, x: -20 }}
+                              whileInView={{ opacity: 1, x: 0 }}
+                              transition={{ delay: i * 0.1 }}
+                              className="flex items-center gap-2 text-cyber-white/70"
+                            >
+                              <CircleStackIcon className="w-4 h-4 text-matrix-green" />
+                              {tech}
+                            </motion.li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 className="text-neon-blue mb-2">Languages</h4>
+                        <ul className="space-y-2">
+                          {languageStack.map((lang, i) => (
+                            <motion.li
+                              key={lang}
+                              initial={{ opacity: 0, x: -20 }}
+                              whileInView={{ opacity: 1, x: 0 }}
+                              transition={{ delay: i * 0.1 }}
+                              className="flex items-center gap-2 text-cyber-white/70"
+                            >
+                              <CodeBracketIcon className="w-4 h-4 text-matrix-green" />
+                              {lang}
+                            </motion.li>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </div>

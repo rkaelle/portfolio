@@ -24,9 +24,9 @@ const experienceItems: JobCategories = {
       jobTitle: "Avionics EE Intern",
       duration: "May 2025 - August 2025",
       desc: [
-        "Designed and tested thermal behavior of avionics components in a custom designed heat & windspeed controlled chamber",
-        "Tested RF signature of avionics components using a vector network analyzer",
-        "Used Altium to design a new power distribution unit (PDU) for the propulsion system",
+        "Combined LTE and ADS-B/UAT antennas (4 → 2 per aircraft), removing 2 harnesses and 1 manufacturing step; saved 15 g and $10 per aircraft with no loss in LTE throughput or ADS-B/UAT sensitivity.",
+        "Shipped RF receiver toolkit: ADS-B (1090) & UAT (978) decoders + lightweight UAT front end; automated sensitivity/coexistence sweeps; validated link budgets and ~5 km coverage.",
+        "Built antenna gain visualization tool; automated turntable and generated 3D antenna gain plots; drove final antenna placement."
       ],
     },
     "Z Lab": {
