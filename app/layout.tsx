@@ -16,7 +16,7 @@ export const viewport: Viewport = {
 
 /*  -- SEO / SOCIAL -------------------------------------------------- */
 export const metadata: Metadata = {
-  title: 'Ryan Kaelle • Bay Area Hardware Hacker & Full-Stack Dev',
+  title: 'Ryan Kaelle – Drones, radios, and real-time systems.',
   description:
     "Hey, I'm Ryan — a Bay-Area-based junior at UMich who builds hardware, full-stack apps & blockchain infra.",
   keywords: [
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 
   /* -- Open Graph (Facebook/LinkedIn etc.) -- */
   openGraph: {
-    title: 'Ryan Kaelle • Bay Area Hardware Hacker & Full-Stack Dev',
+    title: 'Ryan Kaelle – Drones, radios, and real-time systems.',
     description:
       "Rising junior at UMich building bleeding-edge hardware, web apps & crypto tools in Silicon Valley.",
     url: 'https://rkaelle.com',
@@ -58,11 +58,11 @@ export const metadata: Metadata = {
   /* -- Twitter / X Card -- */
   twitter: {
     card: 'summary_large_image',
-    title: 'Ryan Kaelle • Bay Area Hardware Hacker & Full-Stack Dev',
+    title: 'Ryan Kaelle – Drones, radios, and real-time systems.',
     description:
       "Hey, I'm Ryan — Bay-Area-based junior @UMich building hardware, full-stack apps & blockchain infra.",
     images: ['/assets/ryankaelle_cropped.png'],
-    creator: '@your_handle'   // optional: add if you have one
+    creator: '@kaelleryan'   // optional: add if you have one
   },
 
   /* -- Favicon bundle -- */

@@ -14,10 +14,10 @@ import LastCommit from './components/LastCommit';
 const techStack = [
   "Embedded Systems",
   "RF & Wireless",
+  "Infrastructure",
   "FPGA & Digital Logic",
-  "Distributed Systems & Cloud Security",
-  "On-Chain Systems (Solana & EVM)",
-  "Embedded Linux & Edge",
+  "Distributed Systems",
+  "On-Chain Systems",
   "3D Printing"
 ];
 
@@ -25,9 +25,8 @@ const languageStack = [
   "C/C++",
   "Python",
   "Rust",
-  "JavaScript (React • Next.js)",
+  "React + Next.js",
   "Verilog/VHDL",
-  "Assembly",
   "Solidity",
 ];
 
@@ -323,22 +322,27 @@ const Home = () => {
                   </p>
                 </div>
                 <div className="space-y-8">
-                  {/* Profile Photo */}
+                  {/* Profile Photo - minimal glassy 4:5 card with caption */}
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.2 }}
-                    className="flex justify-center"
+                    className="self-start"
                   >
-                    <div className="relative">
-                      <img
-                        src="/assets/ryan_hiking.jpeg"
-                        alt="Ryan Kaelle"
-                        className="w-44 h-44 md:w-52 md:h-52 rounded-lg object-cover border-2 border-neon-blue/30 shadow-[0_0_20px_rgba(0,128,255,0.3)] hover:shadow-[0_0_30px_rgba(0,128,255,0.5)] transition-all duration-300"
-                      />
-                      <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-neon-blue/10 to-transparent pointer-events-none" />
-                    </div>
+                    <figure className="md:mt-[0.75em] w-48 md:w-56 max-w-full rounded-md ring-1 ring-white/10 bg-white/[0.04] backdrop-blur-md shadow-lg shadow-black/30 overflow-hidden">
+                      <div className="relative w-full aspect-[4/5]">
+                        <img
+                          src="/assets/ryan_hiking.jpeg"
+                          alt="Ryan Kaelle"
+                          className="absolute inset-0 h-full w-full object-cover object-top"
+                          loading="lazy"
+                        />
+                      </div>
+                      <figcaption className="px-2 py-1 text-[10px] leading-tight text-cyber-white/50 tracking-wide">
+                        Ryan Kaelle
+                      </figcaption>
+                    </figure>
                   </motion.div>
 
                   <div>
@@ -411,7 +415,7 @@ const Home = () => {
               className="space-y-8"
             >
               <h2 className="text-4xl font-cyber text-matrix-green">/ projects</h2>
-              <Projects />
+              <Projects homeMode />
             </motion.div>
           </div>
         </section>
