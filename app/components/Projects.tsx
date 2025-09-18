@@ -320,11 +320,12 @@ const Projects: React.FC<{ showPortfolioLink?: boolean; homeMode?: boolean }> = 
            >
              <div className="relative h-full w-full">
                {project.image && (
-                 <Image
+                <Image
                    src={project.image}
                    alt={project.title}
                    fill
-                   className="object-cover"
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 100vw, 100vw"
                  />
                )}
                <div className="absolute inset-0 bg-gradient-to-t from-cyber-black via-cyber-black/70 to-transparent" />
@@ -413,7 +414,7 @@ const Projects: React.FC<{ showPortfolioLink?: boolean; homeMode?: boolean }> = 
                 >
                   <div className="relative h-40 w-full overflow-hidden rounded-t">
                     {project.image && (
-                      <Image src={project.image} alt={project.title} fill className="object-cover" />
+                      <Image src={project.image} alt={project.title} fill className="object-cover" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" />
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-cyber-black/80 via-cyber-black/20 to-transparent" />
                     <span className="absolute top-2 left-2 text-[11px] font-tech rounded px-2 py-0.5 border border-neon-blue/40 text-neon-blue bg-tech-gray/40">
@@ -510,9 +511,9 @@ const Projects: React.FC<{ showPortfolioLink?: boolean; homeMode?: boolean }> = 
                return (
                  <div className="border border-cyber-white/20 bg-cyber-black/40 rounded overflow-hidden">
                    <div className="relative h-48 w-full">
-                     {project.image && (
-                       <Image src={project.image} alt={project.title} fill className="object-cover" />
-                     )}
+                    {project.image && (
+                      <Image src={project.image} alt={project.title} fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
+                    )}
                      <div className="absolute inset-0 bg-gradient-to-t from-cyber-black/90 via-transparent to-transparent" />
                      <span className="absolute top-2 left-2 text-[11px] font-tech rounded px-2 py-0.5 border border-neon-blue/40 text-neon-blue bg-tech-gray/40">
                        {project.tag}

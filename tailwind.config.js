@@ -42,8 +42,10 @@ module.exports = {
         'tech-gray': '#2E3440', // Original polar-1 as tech-gray
       },
       fontFamily: {
-        'cyber': ['Space Grotesk', 'sans-serif'],
-        'tech': ['JetBrains Mono', 'monospace'],
+        // Map utility classes to next/font CSS variables
+        'sans': ['var(--font-inter)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        'cyber': ['var(--font-space-grotesk)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        'tech': ['var(--font-jetbrains)', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',

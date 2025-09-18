@@ -1,15 +1,19 @@
+
 'use client';
 
 import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
+import Image from 'next/image';
 import { ArrowRightIcon, CodeBracketIcon, CircleStackIcon, CommandLineIcon, EnvelopeIcon, ChatBubbleLeftRightIcon } from '@heroicons/react/24/outline';
-import JobList from './components/JobList';
-import Projects from './components/Projects';
+import dynamic from 'next/dynamic';
+const JobList = dynamic(() => import('./components/JobList'), { ssr: false });
+const Projects = dynamic(() => import('./components/Projects'), { ssr: false });
+const LastCommit = dynamic(() => import('./components/LastCommit'), { ssr: false });
 import CypherText from './components/CypherText';
 import Footer from './components/Footer';
 import HeroTypewriter from './components/HeroTypewriter';
 import Navbar from './components/Navbar';
-import LastCommit from './components/LastCommit';
+// LastCommit is loaded dynamically above
 
 const techStack = [
   "Embedded Systems",
@@ -143,8 +147,10 @@ const SideNav = () => {
 const Home = () => {
   const [showArrow, setShowArrow] = useState(true);
   const [fadingOut, setFadingOut] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
     const handleScroll = () => {
       if (window.scrollY > 50 && !fadingOut) {
         setFadingOut(true);
@@ -172,11 +178,11 @@ const Home = () => {
     <main className="min-h-screen bg-[#111319] text-cyber-white overflow-hidden relative">
       {/* Cyberpunk Grid Background */}
       <div className="fixed inset-0 bg-[linear-gradient(to_right,rgba(76,86,106,0.15)_1px,transparent_1px),linear-gradient(to_bottom,rgba(76,86,106,0.15)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_60%,transparent_100%)]" />
-      <ScrollProgress />
+      {isMounted && <ScrollProgress />}
 
       <Navbar />
 
-      <SideNav />
+      {isMounted && <SideNav />}
 
       {/* Rest of the content with adjusted padding for the terminal header */}
       <div className="pt-12 md:pt-24">
@@ -332,11 +338,13 @@ const Home = () => {
                   >
                     <figure className="md:mt-[0.75em] w-48 md:w-56 max-w-full rounded-md ring-1 ring-white/10 bg-white/[0.04] backdrop-blur-md shadow-lg shadow-black/30 overflow-hidden">
                       <div className="relative w-full aspect-[4/5]">
-                        <img
+                        <Image
                           src="/assets/ryan_hiking.jpeg"
                           alt="Ryan Kaelle"
-                          className="absolute inset-0 h-full w-full object-cover object-top"
-                          loading="lazy"
+                          fill
+                          sizes="(max-width: 768px) 12rem, 14rem"
+                          className="object-cover object-top"
+                          priority={false}
                         />
                       </div>
                       <figcaption className="px-2 py-1 text-[10px] leading-tight text-cyber-white/50 tracking-wide">
