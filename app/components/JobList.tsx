@@ -29,6 +29,16 @@ const experienceItems: JobCategories = {
         "Built antenna gain visualization tool; automated turntable and generated 3D antenna gain plots; drove final antenna placement."
       ],
     },
+    "MERO": {
+      jobTitle: "Avionics Lead",
+      duration: "September 2025 - Present",
+      desc: [
+        "Lead cross-functional avionics team of 10 students designing integrated flight control, telemetry, and power systems for high-powered rocket competing in Spaceport America Cup.",
+        "Architected layered avionics stack: sensor drivers (IMU/GNSS/altimeter/thermocouples) → state estimation & data fusion (attitude/altitude estimators) → flight control (GNC) → actuator interfaces (linear actuators, stepper motors, EDF roll control, solenoids).",
+        "Designed 4 custom PCBs in Altium: flight computer (Teensy 4.1-based), sensor board (LSM6DSO32TR IMU, LIS3MDL mag, MS5607 altimeter, u-blox NEO M9 GNSS), actuator driver board (DRV8876 H-bridges, stepper drivers, ESCs), and telemetry board (LoRa RFM95W for uplink/downlink + microSD logging at 50k samples/sec).",
+        "Implemented real-time sensor fusion and flight data logging; integrated LoRa telemetry with ground station for live mission monitoring and external data analysis."
+      ],
+    },
     "Z Lab": {
       jobTitle: "Swarm Intelligence Robotics Chassis Team Lead",
       duration: "January 2024 - Present",
@@ -108,11 +118,10 @@ const JobList = () => {
           <motion.button
             key={category}
             onClick={() => handleCategoryChange(category)}
-            className={`px-4 py-2 font-tech text-sm border ${
-              selectedCategory === category
-                ? 'border-neon-blue text-neon-blue bg-neon-blue/10'
-                : 'border-cyber-white/20 text-cyber-white/60 hover:border-neon-blue/50'
-            } transition-colors`}
+            className={`px-4 py-2 font-tech text-sm border ${selectedCategory === category
+              ? 'border-neon-blue text-neon-blue bg-neon-blue/10'
+              : 'border-cyber-white/20 text-cyber-white/60 hover:border-neon-blue/50'
+              } transition-colors`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -128,15 +137,13 @@ const JobList = () => {
             <motion.button
               key={job}
               onClick={() => setSelectedJob(job)}
-              className={`${
-                isMobile 
-                  ? 'px-2 py-1 min-w-[60px]' 
-                  : 'px-4 py-2 min-w-[200px]'
-              } text-left font-tech text-sm border ${
-                selectedJob === job
+              className={`${isMobile
+                ? 'px-2 py-1 min-w-[60px]'
+                : 'px-4 py-2 min-w-[200px]'
+                } text-left font-tech text-sm border ${selectedJob === job
                   ? 'border-matrix-green text-matrix-green bg-matrix-green/10'
                   : 'border-cyber-white/20 text-cyber-white/60 hover:border-matrix-green/50'
-              } transition-colors`}
+                } transition-colors`}
               whileHover={{ x: isMobile ? 0 : 4 }}
             >
               <span className="text-matrix-green/50 mr-1">{`0${index + 1}.`}</span>
