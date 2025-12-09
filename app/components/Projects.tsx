@@ -111,7 +111,7 @@ const projectsData: ProjectItem[] = [
     image: '/assets/aegis.png',
     links: {
       demo: 'https://aegis-vaults.xyz/',
-      code: 'https://github.com/aegis-vaults/aegis-protocol',
+      code: 'https://github.com/aegis-vaults',
     },
     features: [
       'Anchor-based smart contract with PDA vault architecture for agent custody separation',
