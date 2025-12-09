@@ -57,7 +57,7 @@ const projectsData: ProjectItem[] = [
     showOnHome: true,
     spotlight: false,
     highlight: true,
-    image: '/assets/smartglasses.jpeg ',
+    image: '/assets/smartglasses.jpeg',
     links: { code: 'https://github.com/stridelens/stride-lens', demo: 'https://stridelens.fit/' },
     features: [
       'Custom PCB with ESP32-S3, GPS (PA1616D), 9-axis IMU (BNO055), and battery management',
