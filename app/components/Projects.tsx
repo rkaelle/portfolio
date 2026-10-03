@@ -48,6 +48,52 @@ const GRID_TAGS: ActiveTag[] = ['All', ...BASE_TAGS];
 
 const projectsData: ProjectItem[] = [
   {
+    id: 'hill-street-planes',
+    title: '1012 Hill Street Planes',
+    summary: 'Self-hosted ADS-B receiver and live aircraft map; observed 2,619 aircraft addresses in one day and reduced 60-second forecast error by 19.6%.',
+    description: 'A self-hosted aircraft-tracking platform that decodes ADS-B radio traffic, records durable receiver archives, and renders live aircraft positions in a React map. Its learned flight predictor was evaluated against constant-velocity extrapolation on a chronologically held-out test set.',
+    tech: ['React', 'ADS-B', 'Software-Defined Radio', 'Machine Learning', 'NDJSON'],
+    tag: 'RF',
+    showOnHome: true,
+    spotlight: false,
+    highlight: true,
+    image: '/assets/1012hillstreetplanes.png',
+    features: [
+      'Live map of decoded aircraft positions with altitude-coded aircraft markers',
+      'Durable radio-capture archives with receiver coverage and uptime reporting',
+      'Observed 2,619 distinct aircraft addresses and 3,894,586 decoded packets on October 2, 2026',
+      'Recorded a one-day peak of 130 decoded messages per second',
+      'Reached a 469.8 km observed maximum accepted position range',
+      'Learned predictor reduced held-out 60-second flight position error by 19.6% versus constant-velocity extrapolation'
+    ],
+    challenges: 'Combined live radio decoding, position validation, archival storage, map rendering, and offline model evaluation into a receiver that remains useful during restarts and intermittent connectivity. The forecast comparison keeps whole aircraft encounters within one chronological partition so the final test does not leak observations from the same flight.',
+    outcome: 'As of October 3, 2026, the receiver had accumulated 25.2 days of observing time. On the final held-out test, its 60-second model achieved 0.377 km mean position error across 298 flights, compared with 0.469 km for the constant-velocity baseline.',
+    year: '2026'
+  },
+  {
+    id: 'rkume',
+    title: 'rk(s)ume',
+    summary: 'Source-first resume editor built around Markdown and CSS, with live paper preview, offline drafts, revision history, and shareable saved snapshots.',
+    description: 'A browser-based resume editor where every resume is an editable bundle of Markdown, document CSS, and print settings. Authors see a live paper preview as they edit, can create independent variants, reuse library snippets, restore revisions, and print the current draft or a saved shared version to PDF.',
+    tech: ['Next.js', 'React', 'TypeScript', 'Supabase', 'Zustand', 'CodeMirror'],
+    tag: 'Full Stack',
+    showOnHome: true,
+    spotlight: false,
+    highlight: true,
+    image: '/assets/rkume.png',
+    features: [
+      'CodeMirror source editors for Markdown and CSS beside a live, sandboxed paper preview',
+      'Versioned resume files in Postgres with optimistic concurrency checks and conflict handling',
+      'IndexedDB draft queue that preserves edits offline and retries cloud saves when connectivity returns',
+      'Independent resume variants, reusable Markdown snippets, and restorable revision history',
+      'Share links pinned to a saved revision, with password, expiry, redaction, and export controls',
+      'Browser-native PDF export using the current in-memory draft, including unsynced edits'
+    ],
+    challenges: 'Maintained preview and print fidelity while supporting arbitrary author CSS, variable redaction, browser font loading, and multi-page documents. The save path also needed to keep local drafts safe through offline work and surface version conflicts instead of silently overwriting another session.',
+    outcome: 'Delivered a source-controlled resume workflow with immediate preview updates, durable cloud revision history, and shareable snapshots that remain unchanged after later edits.',
+    year: '2026'
+  },
+  {
     id: 'smart-glasses',
     title: 'AR Navigation Glasses for Athletes',
     summary: 'ESP32-based heads-up display glasses with turn-by-turn navigation, custom route uploading, and GPS/IMU fusion.',
