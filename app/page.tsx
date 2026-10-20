@@ -308,7 +308,7 @@ const Home = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <div className="space-y-6">
                   <p className="text-cyber-white/80">
-                    Hey, I'm <span className="text-neon-blue">Ryan</span> — a incoming Junior at the University of Michigan who can't decide whether
+                    Hey, I'm <span className="text-neon-blue">Ryan</span> — a senior at the University of Michigan who can't decide whether
                     I love solder fumes or compiler errors more. Most days you'll find me swapping chips on a PCB, teaching swarm robots new tricks, or writing Solidity that (hopefully) doesn't
                     set fire to a testnet.
                   </p>

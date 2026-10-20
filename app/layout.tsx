@@ -20,7 +20,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: 'Ryan Kaelle – Drones, radios, and real-time systems.',
   description:
-    "Hey, I'm Ryan — a Bay-Area-based junior at UMich who builds hardware, full-stack apps & blockchain infra.",
+    "Hey, I'm Ryan — a Bay-Area-based senior at UMich who builds hardware, full-stack apps & blockchain infra.",
   keywords: [
     'Ryan Kaelle',
     'Bay Area engineer',
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Ryan Kaelle – Drones, radios, and real-time systems.',
     description:
-      "Rising junior at UMich building bleeding-edge hardware, web apps & crypto tools in Silicon Valley.",
+      "Senior at UMich building bleeding-edge hardware, web apps & crypto tools in Silicon Valley.",
     url: 'https://rkaelle.com',
     siteName: 'Ryan Kaelle',
     images: [
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Ryan Kaelle – Drones, radios, and real-time systems.',
     description:
-      "Hey, I'm Ryan — Bay-Area-based junior @UMich building hardware, full-stack apps & blockchain infra.",
+      "Hey, I'm Ryan — Bay-Area-based senior @UMich building hardware, full-stack apps & blockchain infra.",
     images: ['/assets/ryankaelle_cropped.png'],
     creator: '@kaelleryan'   // optional: add if you have one
   },

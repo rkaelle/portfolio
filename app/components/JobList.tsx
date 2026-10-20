@@ -20,7 +20,27 @@ interface JobCategories {
 
 const experienceItems: JobCategories = {
   "Technical": {
-    "Zipline": {
+    "Zipline (2026)": {
+      jobTitle: "Avionics EE Intern",
+      duration: "May 2026 - August 2026",
+      desc: [
+        "Developed the ADS-B receiver firmware in Zephyr C, interfacing directly with a sub-GHz transceiver over SPI, matching commercial receivers at a fraction of the cost and cutting component cost 94% (>$10M/yr projected).",
+        "Built an IRQ-driven receive path draining the radio FIFO in 64-byte chunks, scanning 14-byte windows for DF17/18 frames, and verifying 112-bit Mode S parity, with a 256-entry queue so logging never blocks RX.",
+        "Hardened the firmware with startup noise-floor calibration, per-packet RSSI, 5 s health stats, and automatic RX recovery, and wrote a no_std async Rust driver plus 978 MHz UAT and 915 MHz LoRa link-test images.",
+        "Designed the schematic and PCB, then validated −84 dBm 1090ES and −93 dBm UAT sensitivity at ~1,500 pkt/s over 23.2+ hours of remote automated rig testing plus airborne flight tests in Zipline's busiest airspace."
+      ],
+    },
+    "Optica": {
+      jobTitle: "Controls and EE Contractor",
+      duration: "January 2026 - May 2026",
+      desc: [
+        "Owned electrical and controls architecture for a 10,000 lb/day scrap-metal sorter that reached 97% sorting accuracy on real scrap, from component selection through integration of vision, spectroscopy, encoders, lasers, and air jets.",
+        "Programmed deterministic B&R X20 PLC control firmware tracking up to 16 objects in a 4 ms loop, driving SMC air jets from encoder-tracked conveyor position through analog outputs and industrial I/O.",
+        "Integrated a real-time vision pipeline with a custom YOLO11s model and Basler camera, scheduling ejection over UDP.",
+        "Consolidated control hardware onto a single CPU, eliminating 3 signal modules and ~€1,800 from the BOM."
+      ],
+    },
+    "Zipline (2025)": {
       jobTitle: "Avionics EE Intern",
       duration: "May 2025 - August 2025",
       desc: [
