@@ -2,12 +2,11 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import FadeInSection from './FadeInSection';
 
 interface Job {
   jobTitle: string;
   duration: string;
-  desc: (string | JSX.Element)[];
+  desc: React.ReactNode[];
 }
 
 interface JobCategory {
@@ -172,42 +171,36 @@ const JobList = () => {
           ))}
         </div>
 
-        {/* Job Details */}
-        <motion.div
-          key={`${selectedCategory}-${selectedJob}`}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className="flex-1 space-y-4"
-        >
-          <div className="space-y-1">
-            <h3 className="text-xl font-cyber text-neon-blue">
-              {experienceItems[selectedCategory][selectedJob].jobTitle}
-            </h3>
-            <p className="text-matrix-green font-tech">@ {selectedJob}</p>
-            <p className="text-cyber-white/60 font-tech text-sm">
-              {experienceItems[selectedCategory][selectedJob].duration}
-            </p>
-          </div>
-
-          <ul className="space-y-4">
-            {experienceItems[selectedCategory][selectedJob].desc.map((item, index) => (
-              <motion.li
-                key={index}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="flex items-start gap-2 text-cyber-white/80"
+        {/* Keep every job in the server-rendered HTML; tabs only change visibility. */}
+        <div className="flex-1">
+          {Object.entries(experienceItems).flatMap(([category, jobs]) =>
+            Object.entries(jobs).map(([name, job]) => (
+              <section
+                key={`${category}-${name}`}
+                hidden={selectedCategory !== category || selectedJob !== name}
+                className="space-y-4"
+                aria-label={`${name}: ${job.jobTitle}`}
               >
-                <span className="text-matrix-green mt-1.5">▹</span>
-                <span className="flex-1">{item}</span>
-              </motion.li>
-            ))}
-          </ul>
-        </motion.div>
+                <div className="space-y-1">
+                  <h3 className="text-xl font-cyber text-neon-blue">{job.jobTitle}</h3>
+                  <p className="text-matrix-green font-tech">@ {name}</p>
+                  <p className="text-cyber-white/60 font-tech text-sm">{job.duration}</p>
+                </div>
+                <ul className="space-y-4">
+                  {job.desc.map((item, index) => (
+                    <li key={index} className="flex items-start gap-2 text-cyber-white/80">
+                      <span aria-hidden="true" className="text-matrix-green mt-1.5">▹</span>
+                      <span className="flex-1">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )),
+          )}
+        </div>
       </div>
     </div>
   );
 };
 
-export default JobList; 
+export default JobList;

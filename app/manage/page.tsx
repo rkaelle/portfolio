@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { db } from '../lib/firebase';
+import { auth, db } from '../lib/firebase';
 import { collection, addDoc, serverTimestamp, query, where, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import { inMemoryPersistence, isSignInWithEmailLink, sendSignInLinkToEmail, setPersistence, signInWithEmailLink, signOut } from 'firebase/auth';
 import FadeInSection from '../components/FadeInSection';
 import Link from 'next/link';
 import '../styles/Manage.css';
@@ -17,6 +18,18 @@ function Manage() {
         lastName: ''
     });
     const [message, setMessage] = useState('');
+    const [busy, setBusy] = useState(false);
+    const [confirmationLink, setConfirmationLink] = useState<string | null>(null);
+    const confirmUnsubscribe = confirmationLink !== null;
+
+    useEffect(() => {
+        const link = window.location.href;
+        if (isSignInWithEmailLink(auth, link)) {
+            setConfirmationLink(link);
+            // Keep the one-time code out of subsequent referrers and history.
+            window.history.replaceState(null, '', '/manage');
+        }
+    }, []);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -25,12 +38,16 @@ function Manage() {
 
     const submitHandler = async (e: React.FormEvent) => {
         e.preventDefault();
-        const { email, firstName, lastName } = inputs;
+        if (busy) return;
+        const email = inputs.email.trim().toLowerCase();
+        const firstName = inputs.firstName.trim();
+        const lastName = inputs.lastName.trim();
         if (!email || !firstName || !lastName) {
             setMessage('Please fill in all fields.');
             return;
         }
 
+        setBusy(true);
         try {
             await addDoc(collection(db, "emails"), {
                 firstName,
@@ -40,37 +57,55 @@ function Manage() {
             });
             setInputs({ email: '', firstName: '', lastName: '' });
             setMessage('Successfully subscribed!');
-        } catch (error) {
-            console.error("Error adding document: ", error);
+        } catch {
             setMessage('Failed to subscribe. Please try again later.');
+        } finally {
+            setBusy(false);
         }
     };
 
     const unsubscribeHandler = async () => {
-        const { email } = inputs;
+        const email = inputs.email.trim().toLowerCase();
         if (!email) {
             setMessage('Please enter your email to unsubscribe.');
             return;
         }
 
+        if (busy) return;
+        setBusy(true);
+        let verifiedSession = false;
         try {
-            const q = query(collection(db, "emails"), where("email", "==", email));
-            const querySnapshot = await getDocs(q);
-
-            if (querySnapshot.empty) {
-                setMessage('Email not found.');
+            if (!confirmationLink) {
+                await sendSignInLinkToEmail(auth, email, {
+                    url: new URL('/manage', window.location.origin).toString(),
+                    handleCodeInApp: true,
+                });
+                // Do not look up whether this email is subscribed.
+                setMessage('Successfully sent your confirmation link. Check your inbox.');
                 return;
             }
 
-            querySnapshot.forEach(async (docSnapshot) => {
-                await deleteDoc(doc(db, "emails", docSnapshot.id));
-            });
+            await setPersistence(auth, inMemoryPersistence);
+            const { user } = await signInWithEmailLink(auth, email, confirmationLink);
+            verifiedSession = true;
+            if (!user.emailVerified || user.email?.toLowerCase() !== email) {
+                throw new Error('Email verification required');
+            }
+            // Firestore rules independently require a verified matching email.
+            const q = query(collection(db, 'emails'), where('email', '==', email));
+            const querySnapshot = await getDocs(q);
+            await Promise.all(querySnapshot.docs.map((item) => deleteDoc(doc(db, 'emails', item.id))));
 
             setInputs({ email: '', firstName: '', lastName: '' });
             setMessage('Successfully unsubscribed!');
-        } catch (error) {
-            console.error("Error removing document: ", error);
-            setMessage('Failed to unsubscribe. Please try again later.');
+            setConfirmationLink(null);
+            window.history.replaceState(null, '', '/manage');
+        } catch {
+            setConfirmationLink(null);
+            setMessage('Unable to confirm your request. Please request a fresh link or contact Ryan.');
+        } finally {
+            if (verifiedSession) await signOut(auth).catch(() => {});
+            setBusy(false);
         }
     };
 
@@ -118,6 +153,7 @@ function Manage() {
                                     type="text"
                                     placeholder="Enter first name"
                                     name="firstName"
+                                    maxLength={100}
                                     onChange={handleInputChange}
                                     value={inputs.firstName}
                                 />
@@ -126,6 +162,7 @@ function Manage() {
                                     type="text"
                                     placeholder="Enter last name"
                                     name="lastName"
+                                    maxLength={100}
                                     onChange={handleInputChange}
                                     value={inputs.lastName}
                                 />
@@ -135,11 +172,15 @@ function Manage() {
                                 type="email"
                                 placeholder="Enter email"
                                 name="email"
+                                maxLength={254}
                                 onChange={handleInputChange}
                                 value={inputs.email}
                             />
-                            <button className="Button" type="submit">Submit</button>
-                            <button type="button" className="Button" onClick={unsubscribeHandler}>Unsubscribe</button>
+                            <button className="Button" type="submit" disabled={busy}>Subscribe</button>
+                            <button type="button" className="Button" onClick={unsubscribeHandler} disabled={busy}>
+                                {busy ? 'Please wait…' : confirmUnsubscribe ? 'Confirm unsubscribe' : 'Email unsubscribe link'}
+                            </button>
+                            {confirmUnsubscribe && <p>Re-enter your email address, then confirm to unsubscribe.</p>}
                             {message && (
                                 <p className={`message ${message.includes("Successfully") ? 'success' : 'error'}`}>
                                     {message}
@@ -153,4 +194,4 @@ function Manage() {
     );
 }
 
-export default Manage; 
+export default Manage;

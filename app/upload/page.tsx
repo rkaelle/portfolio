@@ -5,9 +5,12 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowLeftIcon, CommandLineIcon, CloudArrowUpIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 import TypewriterText from '@/app/components/TypewriterText';
-import { db, storage } from '@/app/lib/firebase';
-import { collection, addDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { auth, db, storage } from '@/app/lib/firebase';
+import { collection, addDoc, doc, getDocFromServer, updateDoc, serverTimestamp } from 'firebase/firestore';
+import { ref, uploadBytes } from 'firebase/storage';
+import type { User } from 'firebase/auth';
+import OwnerUploadGate from '@/app/components/OwnerUploadGate';
+import { UPLOAD_ACCEPT, UploadValidationError, validateUpload } from '@/app/lib/upload-validation';
 
 const EYE_COLORS = ['Blue', 'Brown', 'Green', 'Hazel', 'Gray', 'Amber', 'Other'];
 const HAIR_COLORS = ['Black', 'Brown (Dark)', 'Brown (Light)', 'Blonde', 'Red', 'Auburn', 'Gray', 'White', 'Bald', 'Other'];
@@ -94,14 +97,26 @@ function FileUpload({
   file: File | null;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const [fileError, setFileError] = useState('');
+
+  const selectFile = useCallback(async (selected: File | null) => {
+    setFileError('');
+    try {
+      if (selected) await validateUpload(selected);
+      onChange(selected);
+    } catch (error) {
+      onChange(null);
+      setFileError(error instanceof UploadValidationError ? error.message : 'Unable to read this file.');
+    }
+  }, [onChange]);
 
   const handleDrop = useCallback(
     (e: React.DragEvent) => {
       e.preventDefault();
       const dropped = e.dataTransfer.files[0] ?? null;
-      onChange(dropped);
+      void selectFile(dropped);
     },
-    [onChange],
+    [selectFile],
   );
 
   return (
@@ -142,22 +157,27 @@ function FileUpload({
           <div className="space-y-2 text-cyber-white/40 font-tech text-sm">
             <CloudArrowUpIcon className="w-8 h-8 mx-auto text-neon-blue/40" />
             <p>Drag & drop or click to upload</p>
-            <p className="text-xs">PNG, JPG, PDF accepted</p>
+            <p className="text-xs">PNG, JPG, PDF accepted · 5 MB maximum per file</p>
           </div>
         )}
       </div>
       <input
         ref={inputRef}
         type="file"
-        accept="image/*,.pdf"
+        accept={UPLOAD_ACCEPT}
         className="hidden"
-        onChange={(e) => onChange(e.target.files?.[0] ?? null)}
+        onChange={(e) => { void selectFile(e.target.files?.[0] ?? null); }}
       />
+      {fileError && <p role="alert" className="text-nord-aurora-1 font-tech text-xs mt-2">{fileError}</p>}
     </div>
   );
 }
 
-export default function SkyDivingForm() {
+export default function UploadPage() {
+  return <OwnerUploadGate>{(owner) => <SkyDivingForm key={owner.uid} owner={owner} />}</OwnerUploadGate>;
+}
+
+function SkyDivingForm({ owner }: { owner: User }) {
   const [form, setForm] = useState<FormData>(INITIAL);
   const [headshot, setHeadshot] = useState<File | null>(null);
   const [signature, setSignature] = useState<File | null>(null);
@@ -190,8 +210,8 @@ export default function SkyDivingForm() {
 
   const uploadFile = async (file: File, path: string): Promise<string> => {
     const storageRef = ref(storage, path);
-    await uploadBytes(storageRef, file);
-    return getDownloadURL(storageRef);
+    await uploadBytes(storageRef, file, { customMetadata: { ownerUid: owner.uid } });
+    return storageRef.fullPath;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -207,7 +227,13 @@ export default function SkyDivingForm() {
 
     setSubmitting(true);
     try {
+      const ownerAccess = await getDocFromServer(doc(db, '_access', 'uploadOwner'));
+      if (auth.currentUser?.uid !== owner.uid || ownerAccess.data()?.uid !== owner.uid) {
+        throw new Error('Upload access required');
+      }
+      await Promise.all([validateUpload(headshot!), validateUpload(signature!)]);
       const docRef = await addDoc(collection(db, 'skydiving_bookings'), {
+        ownerUid: owner.uid,
         contact: { type: form.contactType, value: form.contactValue },
         name: {
           first: form.firstName,
@@ -218,8 +244,8 @@ export default function SkyDivingForm() {
         eyeColor: form.eyeColor,
         hairColor: form.hairColor,
         dob: form.dob,
-        height: `${form.heightFt}-${form.heightIn || '0'}`,
-        weight: form.weight,
+        height: `${Number(form.heightFt)}-${Number(form.heightIn || '0')}`,
+        weight: String(Number(form.weight)),
         address: {
           state: form.state,
           street: form.street,
@@ -237,19 +263,18 @@ export default function SkyDivingForm() {
       });
 
       const id = docRef.id;
-      const [headshotUrl, signatureUrl] = await Promise.all([
+      const [headshotPath, signaturePath] = await Promise.all([
         uploadFile(headshot!, `skydiving/${id}/headshot`),
         uploadFile(signature!, `skydiving/${id}/signature`),
       ]);
 
-      await updateDoc(docRef, { headshotUrl, signatureUrl });
+      await updateDoc(docRef, { headshotPath, signaturePath });
 
       setSubmissionId(id);
       setSubmitted(true);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (err) {
-      console.error(err);
-      setError('Submission failed. Please try again.');
+      setError(err instanceof UploadValidationError ? err.message : 'Submission failed. Please try again.');
     } finally {
       setSubmitting(false);
     }
@@ -398,7 +423,7 @@ export default function SkyDivingForm() {
                       type={form.contactType === 'phone' ? 'tel' : 'text'}
                       className={inputClass}
                       placeholder={form.contactType === 'phone' ? '+1 (555) 000-0000' : form.contactType === 'snapchat' ? 'your.username' : '@username'}
-                      value={form.contactValue}
+                      maxLength={254} value={form.contactValue}
                       onChange={set('contactValue')}
                     />
                   </div>
@@ -412,15 +437,15 @@ export default function SkyDivingForm() {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div>
                     <label className={labelClass}>First Name {requiredStar}</label>
-                    <input className={inputClass} type="text" placeholder="First" value={form.firstName} onChange={set('firstName')} />
+                    <input className={inputClass} type="text" placeholder="First" maxLength={100} value={form.firstName} onChange={set('firstName')} />
                   </div>
                   <div>
                     <label className={labelClass}>Middle Name</label>
-                    <input className={inputClass} type="text" placeholder="Middle" value={form.middleName} onChange={set('middleName')} />
+                    <input className={inputClass} type="text" placeholder="Middle" maxLength={100} value={form.middleName} onChange={set('middleName')} />
                   </div>
                   <div>
                     <label className={labelClass}>Last Name {requiredStar}</label>
-                    <input className={inputClass} type="text" placeholder="Last" value={form.lastName} onChange={set('lastName')} />
+                    <input className={inputClass} type="text" placeholder="Last" maxLength={100} value={form.lastName} onChange={set('lastName')} />
                   </div>
                 </div>
 
@@ -483,7 +508,7 @@ export default function SkyDivingForm() {
                     <input
                       className={inputClass}
                       type="number"
-                      min="1"
+                      min="1" max="9999"
                       placeholder="lbs"
                       value={form.weight}
                       onChange={set('weight')}
@@ -502,7 +527,7 @@ export default function SkyDivingForm() {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="sm:col-span-2">
                     <label className={labelClass}>Street Address</label>
-                    <input className={inputClass} type="text" placeholder="123 Main St" value={form.street} onChange={set('street')} />
+                    <input className={inputClass} type="text" placeholder="123 Main St" maxLength={200} value={form.street} onChange={set('street')} />
                   </div>
                   <div>
                     <label className={labelClass}>State</label>
@@ -516,7 +541,7 @@ export default function SkyDivingForm() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className={labelClass}>City</label>
-                    <input className={inputClass} type="text" placeholder="City" value={form.city} onChange={set('city')} />
+                    <input className={inputClass} type="text" placeholder="City" maxLength={100} value={form.city} onChange={set('city')} />
                   </div>
                   <div>
                     <label className={labelClass}>Zip Code</label>
@@ -527,11 +552,11 @@ export default function SkyDivingForm() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className={labelClass}>Driver&apos;s License No.</label>
-                    <input className={inputClass} type="text" placeholder="License number" value={form.dlNumber} onChange={set('dlNumber')} />
+                    <input className={inputClass} type="text" placeholder="License number" maxLength={100} value={form.dlNumber} onChange={set('dlNumber')} />
                   </div>
                   <div>
                     <label className={labelClass}>Issue Date (mm/dd/yyyy)</label>
-                    <input className={inputClass} type="text" placeholder="MM/DD/YYYY" value={form.dlIssueDate} onChange={set('dlIssueDate')} />
+                    <input className={inputClass} type="text" placeholder="MM/DD/YYYY" maxLength={10} value={form.dlIssueDate} onChange={set('dlIssueDate')} />
                   </div>
                 </div>
 

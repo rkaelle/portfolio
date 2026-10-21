@@ -1,10 +1,15 @@
-'use client';
-
 import React from 'react';
 import { ArrowLeftIcon, CommandLineIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import TypewriterText from '@/app/components/TypewriterText';
 import Projects from '@/app/components/Projects';
+import { pageMetadata } from '../lib/seo';
+
+export const metadata = pageMetadata({
+  title: 'Engineering Projects',
+  description: 'Explore Ryan Kaelle\u2019s embedded systems, RF, avionics, and software projects, with technical overviews, design challenges, and results.',
+  path: '/projects',
+});
 
 export default function ProjectsPage() {
   return (
@@ -33,8 +38,10 @@ export default function ProjectsPage() {
         <div className="fixed inset-0 bg-[linear-gradient(to_right,rgba(76,86,106,0.15)_1px,transparent_1px),linear-gradient(to_bottom,rgba(76,86,106,0.15)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_60%,transparent_100%)]" />
 
         {/* Projects Section from Home with full functionality */}
-        <section className="px-8 py-16 relative z-10">
+        <section className="px-8 pt-32 pb-16 relative z-10">
           <div className="max-w-7xl mx-auto">
+            <h1 className="text-3xl md:text-5xl font-cyber text-neon-blue mb-4">Engineering Projects</h1>
+            <p className="text-cyber-white/70 max-w-2xl mb-12">Embedded systems, avionics, RF hardware, and software — from early prototypes to tested systems.</p>
             <Projects showPortfolioLink={false} />
           </div>
         </section>

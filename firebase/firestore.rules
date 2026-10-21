@@ -1,0 +1,91 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function validName(value) {
+      return value is string && value.size() > 0 && value.size() <= 100;
+    }
+
+    function ownsSubscription() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && request.auth.token.email == resource.data.email;
+    }
+
+    function isUploadOwner() {
+      return request.auth != null
+        && get(/databases/$(database)/documents/_access/uploadOwner).data.uid == request.auth.uid;
+    }
+
+    function text(value, maximum) {
+      return value is string && value.size() <= maximum;
+    }
+
+    function validBooking(data, bookingId) {
+      return data.keys().hasAll(['ownerUid', 'contact', 'name', 'gender', 'eyeColor', 'hairColor', 'dob', 'height', 'weight', 'address', 'driversLicense', 'organDonor', 'moreThanTwoJumps', 'paid', 'submittedAt'])
+        && data.keys().hasOnly(['ownerUid', 'contact', 'name', 'gender', 'eyeColor', 'hairColor', 'dob', 'height', 'weight', 'address', 'driversLicense', 'organDonor', 'moreThanTwoJumps', 'paid', 'submittedAt', 'headshotPath', 'signaturePath'])
+        && data.ownerUid == request.auth.uid
+        && data.contact.keys().hasAll(['type', 'value'])
+        && data.contact.keys().hasOnly(['type', 'value'])
+        && data.contact.type in ['phone', 'snapchat', 'telegram']
+        && text(data.contact.value, 254) && data.contact.value.size() > 0
+        && data.name.keys().hasAll(['first', 'middle', 'last'])
+        && data.name.keys().hasOnly(['first', 'middle', 'last'])
+        && validName(data.name.first) && validName(data.name.last) && text(data.name.middle, 100)
+        && data.gender in ['Male', 'Female', 'Non-binary', 'Prefer not to say']
+        && data.eyeColor in ['Blue', 'Brown', 'Green', 'Hazel', 'Gray', 'Amber', 'Other']
+        && data.hairColor in ['Black', 'Brown (Dark)', 'Brown (Light)', 'Blonde', 'Red', 'Auburn', 'Gray', 'White', 'Bald', 'Other']
+        && data.dob is string && data.dob.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
+        && data.height is string && data.height.matches('^[3-8]-(0|[1-9]|1[01])$')
+        && data.weight is string && data.weight.matches('^[1-9][0-9]{0,3}$')
+        && data.address.keys().hasAll(['state', 'street', 'city', 'zip'])
+        && data.address.keys().hasOnly(['state', 'street', 'city', 'zip'])
+        && text(data.address.state, 2) && text(data.address.street, 200)
+        && text(data.address.city, 100) && text(data.address.zip, 10)
+        && data.driversLicense.keys().hasAll(['number', 'issueDate'])
+        && data.driversLicense.keys().hasOnly(['number', 'issueDate'])
+        && text(data.driversLicense.number, 100) && text(data.driversLicense.issueDate, 10)
+        && data.organDonor is bool
+        && (data.moreThanTwoJumps == null || data.moreThanTwoJumps in ['yes', 'no'])
+        && data.paid == false && data.submittedAt is timestamp
+        && (!data.keys().hasAny(['headshotPath', 'signaturePath']) || (
+          data.keys().hasAll(['headshotPath', 'signaturePath'])
+          && data.headshotPath == 'skydiving/' + bookingId + '/headshot'
+          && data.signaturePath == 'skydiving/' + bookingId + '/signature'
+        ));
+    }
+
+    match /_access/uploadOwner {
+      // Only a trusted administrator can configure the one authorized UID.
+      allow get: if request.auth != null && resource.data.uid == request.auth.uid;
+      allow list, write: if false;
+    }
+
+    match /skydiving_bookings/{bookingId} {
+      allow read, delete: if isUploadOwner();
+      allow create: if isUploadOwner() && validBooking(request.resource.data, bookingId)
+        && !request.resource.data.keys().hasAny(['headshotPath', 'signaturePath'])
+        && request.resource.data.submittedAt == request.time;
+      allow update: if isUploadOwner() && validBooking(request.resource.data, bookingId)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['headshotPath', 'signaturePath']);
+    }
+
+    match /emails/{subscriptionId} {
+      allow create: if request.resource.data.keys().hasAll(['firstName', 'lastName', 'email', 'time'])
+        && request.resource.data.keys().hasOnly(['firstName', 'lastName', 'email', 'time'])
+        && validName(request.resource.data.firstName)
+        && validName(request.resource.data.lastName)
+        && request.resource.data.email is string
+        && request.resource.data.email.size() <= 254
+        && request.resource.data.email == request.resource.data.email.lower()
+        && request.resource.data.email.matches('^[^ @]+@[^ @]+[.][^ @]+$')
+        && request.resource.data.time == request.time;
+      allow get, list, delete: if ownsSubscription();
+      allow update: if false;
+    }
+
+    // Unmatched paths stay private. Admin SDK operations use separate IAM.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

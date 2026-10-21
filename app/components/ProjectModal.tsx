@@ -12,29 +12,8 @@ import {
     CheckCircleIcon
 } from '@heroicons/react/24/outline';
 
-interface ProjectLinks {
-    code?: string;
-    demo?: string;
-    thread?: string;
-}
-
-interface ProjectItem {
-    id: string;
-    title: string;
-    summary: string;
-    description?: string;
-    tech: string[];
-    tag: string;
-    spotlight?: boolean;
-    showOnHome?: boolean;
-    highlight?: boolean;
-    image?: string;
-    links?: ProjectLinks;
-    features?: string[];
-    challenges?: string;
-    outcome?: string;
-    year?: string;
-}
+import Link from 'next/link';
+import type { ProjectItem } from '../lib/projects';
 
 interface ProjectModalProps {
     project: ProjectItem | null;
@@ -131,6 +110,11 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
 
                             {/* Content */}
                             <div className="p-6 space-y-6">
+                                {project.description && (
+                                    <Link href={`/projects/${project.id}`} onClick={onClose} className="inline-block text-neon-blue font-tech text-sm hover:underline">
+                                        Read full project →
+                                    </Link>
+                                )}
                                 {/* Links Section */}
                                 {project.links && (Object.keys(project.links).length > 0) && (
                                     <div className="flex flex-wrap gap-3">

@@ -1,9 +1,10 @@
 'use client';
 
-import { initializeApp, getApps } from 'firebase/app';
+import { FirebaseError, initializeApp, getApps } from 'firebase/app';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { getStorage } from 'firebase/storage';
 import { getFirestore } from 'firebase/firestore';
+import { initializeAppCheck, ReCaptchaEnterpriseProvider } from 'firebase/app-check';
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -28,4 +29,19 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 const storage = getStorage(app);
 
-export { db, auth, storage, signInWithEmailAndPassword }; 
+// Register the site in Firebase App Check before setting this public site key.
+// Enforcement is a separate project setting; a missing key does not imply protection.
+const appCheckSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_ENTERPRISE_SITE_KEY;
+if (typeof window !== 'undefined' && appCheckSiteKey) {
+    try {
+        initializeAppCheck(app, {
+            provider: new ReCaptchaEnterpriseProvider(appCheckSiteKey),
+            isTokenAutoRefreshEnabled: true,
+        });
+    } catch (error) {
+        // A hot reload may evaluate this module again for the same Firebase app.
+        if (!(error instanceof FirebaseError) || error.code !== 'appCheck/already-initialized') throw error;
+    }
+}
+
+export { db, auth, storage, signInWithEmailAndPassword };

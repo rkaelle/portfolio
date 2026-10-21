@@ -1,0 +1,33 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    function isUploadOwner() {
+      return request.auth != null
+        && firestore.get(/databases/(default)/documents/_access/uploadOwner).data.uid == request.auth.uid;
+    }
+
+    match /photos/{file=**} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /skydiving/{file=**} {
+      allow read: if isUploadOwner();
+    }
+
+    match /skydiving/{bookingId}/{fileName} {
+      allow create, update: if isUploadOwner()
+        && fileName in ['headshot', 'signature']
+        && request.resource.size > 0 && request.resource.size <= 5 * 1024 * 1024
+        && request.resource.contentType in ['image/jpeg', 'image/png', 'application/pdf']
+        && request.resource.metadata.ownerUid == request.auth.uid
+        && firestore.get(/databases/(default)/documents/skydiving_bookings/$(bookingId)).data.ownerUid == request.auth.uid;
+      allow delete: if isUploadOwner();
+    }
+
+    // Uploaded identity documents must never inherit gallery access.
+    match /{file=**} {
+      allow read, write: if false;
+    }
+  }
+}

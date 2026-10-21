@@ -21,7 +21,9 @@ function Footer() {
 
     const submitHandler = async (e: React.FormEvent) => {
         e.preventDefault();
-        const { email, firstName, lastName } = inputs;
+        const email = inputs.email.trim().toLowerCase();
+        const firstName = inputs.firstName.trim();
+        const lastName = inputs.lastName.trim();
         if (!email || !firstName || !lastName) {
             setMessage('Please fill in all fields.');
             return;
@@ -63,6 +65,7 @@ function Footer() {
                                 type="text" 
                                 placeholder="Enter first name" 
                                 name="firstName"
+                                    maxLength={100}
                                 onChange={handleInputChange} 
                                 value={inputs.firstName} 
                             />
@@ -71,6 +74,7 @@ function Footer() {
                                 type="text" 
                                 placeholder="Enter last name" 
                                 name="lastName"
+                                    maxLength={100}
                                 onChange={handleInputChange} 
                                 value={inputs.lastName} 
                             />
@@ -80,6 +84,7 @@ function Footer() {
                             type="email" 
                             placeholder="Enter email" 
                             name="email"
+                                maxLength={254}
                             onChange={handleInputChange} 
                             value={inputs.email} 
                         />
@@ -98,4 +103,4 @@ function Footer() {
     );
 }
 
-export default Footer; 
+export default Footer;

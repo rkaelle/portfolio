@@ -5,23 +5,32 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "test:seo": "node --test tests/seo.test.mjs",
+    "test:security": "node --test tests/security.test.mjs",
+    "test:rules": "node --test tests/firebase-rules.test.mjs",
+    "test:security:http": "node --test tests/security-http.test.mjs"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.1",
-    "@next/third-parties": "^15.4.0-canary.51",
+    "@next/third-parties": "^16.4.2",
     "@vercel/analytics": "^1.5.0",
-    "firebase": "^11.6.0",
+    "firebase": "^13.1.0",
     "framer-motion": "^11.0.3",
-    "next": "^14.1.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "next": "^16.4.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "overrides": {
+    "@grpc/grpc-js": "^1.14.6"
   },
   "devDependencies": {
-    "@types/node": "^20.11.16",
-    "@types/react": "^18.2.52",
-    "autoprefixer": "^10.4.17",
-    "postcss": "^8.4.35",
+    "@firebase/rules-unit-testing": "^6.0.0",
+    "@types/node": "^24.19.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "autoprefixer": "^10.6.1",
+    "postcss": "^8.5.31",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3"
   }

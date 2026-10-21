@@ -19,16 +19,22 @@
 
 # debug
 npm-debug.log*
+firebase-debug.log*
+firestore-debug.log*
+ui-debug.log*
+.firebase/
 yarn-debug.log*
 yarn-error.log*
 
 # local env files
 .env*.local
 .env
+.env.*
+!.env.example
 
 # vercel
 .vercel
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts 
+next-env.d.ts
