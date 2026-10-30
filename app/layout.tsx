@@ -3,13 +3,19 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
 import React from 'react';
-import { Inter, JetBrains_Mono, Space_Grotesk } from 'next/font/google';
+import localFont from 'next/font/local';
+import HandwritingTooltips from './components/HandwritingTooltips';
 import SiteAnalytics from './components/SiteAnalytics';
 import { SITE_URL, HOME_TITLE, HOME_DESCRIPTION } from './lib/seo';
 
-const inter = Inter({ subsets: ['latin'], display: 'swap', variable: '--font-inter' });
-const jetbrains = JetBrains_Mono({ subsets: ['latin'], display: 'swap', variable: '--font-jetbrains', weight: ['100','200','300','400','500','600','700'] });
-const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], display: 'swap', variable: '--font-space-grotesk', weight: ['300','400','500','600','700'] });
+const handwriting = localFont({
+  src: './fonts/rk-handwriting.woff2',
+  display: 'swap',
+  variable: '--font-rk',
+  adjustFontFallback: false,
+  // Enlarge the small handwritten letterforms without scaling layout spacing.
+  declarations: [{ prop: 'size-adjust', value: '125%' }],
+});
 
 /*  -- VISUAL / THEMING --------------------------------------------- */
 export const viewport: Viewport = {
@@ -71,9 +77,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
       </head>
-      <body className={`${inter.variable} ${jetbrains.variable} ${spaceGrotesk.variable} font-sans`}>
+      <body className={`${handwriting.variable} font-sans`}>
         <div className="scanline" />
         {children}
+        <HandwritingTooltips />
         <SiteAnalytics />
       </body>
     </html>

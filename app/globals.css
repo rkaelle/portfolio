@@ -25,7 +25,7 @@
       clip: rect(44px, 450px, 56px, 0);
       animation: cyber-glitch-anim 5s infinite linear alternate-reverse;
     }
-    
+
     &::before {
       text-shadow: 2px 0 theme('colors.nord.aurora-3');
       animation: cyber-glitch-anim-2 1s infinite linear alternate-reverse;
@@ -169,4 +169,31 @@
     transform: rotate(45deg) translate(0, 0);
     opacity: 0.5;
   }
-} 
+}
+/* A real text font: selection, search, copy, form editing and semantics stay native.
+   Applied globally so new content and portals inherit the same handwriting. */
+body {
+  --font-inter: var(--font-rk);
+  --font-space-grotesk: var(--font-rk);
+  --font-jetbrains: var(--font-rk);
+  --font-cyber: var(--font-rk);
+  --font-tech: var(--font-rk);
+}
+body, body *, body *::before, body *::after {
+  font-family: var(--font-rk), sans-serif !important;
+  font-feature-settings: "calt" 1;
+  font-variant-ligatures: contextual;
+}
+.rk-tooltip {
+  position: fixed;
+  z-index: 1000;
+  max-width: min(24rem, calc(100vw - 16px));
+  padding: 4px 8px;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  background: #1a1b26;
+  color: #eceff4;
+  font-size: 14px;
+  line-height: 1.4;
+  pointer-events: none;
+}
