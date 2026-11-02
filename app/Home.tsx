@@ -326,16 +326,6 @@ const Home = () => {
                     or hunting down the next sneaker drop. There's always a book half-read, a podcast half-played,
                     and a branch called "/experiments". Got a wild idea? Let's build it.
                   </p>
-
-                  <aside aria-labelledby="handwriting-note" className="border-l-2 border-matrix-green/50 pl-4 space-y-2">
-                    <h3 id="handwriting-note" className="text-matrix-green text-lg">Yes, this is my handwriting.</h3>
-                    <p className="text-cyber-white/80 leading-relaxed">
-                      Three years of notes, digitized. I extracted individual characters from my handwritten
-                      notes and turned the pen strokes into a proper font for this site. It keeps multiple
-                      real versions of letters and cycles through them, so even the e&apos;s don&apos;t all look alike.
-                      Finally, my notes have a life outside my notebooks.
-                    </p>
-                  </aside>
                 </div>
                 <div className="space-y-8">
                   {/* Profile Photo - minimal glassy 4:5 card with caption */}
