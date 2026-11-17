@@ -35,6 +35,7 @@ export const projectsData: ProjectItem[] = [
     tag: 'Embedded',
     showOnHome: true,
     highlight: true,
+    image: '/assets/out-of-order-processor.png',
     features: [
       'Priority selector issues up to two micro-ops per cycle out of order from a window of three or more operations',
       'RAW/WAW hazard checks and memory ordering around stores',

@@ -25,10 +25,6 @@ try {
     throw error;
 }
 
-const db = getFirestore(app);
-const auth = getAuth(app);
-const storage = getStorage(app);
-
 // Register the site in Firebase App Check before setting this public site key.
 // Enforcement is a separate project setting; a missing key does not imply protection.
 const appCheckSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_ENTERPRISE_SITE_KEY;
@@ -43,5 +39,10 @@ if (typeof window !== 'undefined' && appCheckSiteKey) {
         if (!(error instanceof FirebaseError) || error.code !== 'appCheck/already-initialized') throw error;
     }
 }
+
+// Initialize attestation before constructing clients that may make requests.
+const db = getFirestore(app);
+const auth = getAuth(app);
+const storage = getStorage(app);
 
 export { db, auth, storage };

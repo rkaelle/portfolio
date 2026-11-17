@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Two-way out-of-order LC2K processor</title>
+  <desc id="desc">High-level architecture illustration showing instruction fetch and decode, a micro-op queue with dual-issue selection, two ALUs and one load/store unit, writeback, and branch recovery. Illustrative flow, not a cycle-accurate datapath.</desc>
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#283442" stroke-width="1" opacity=".35"/></pattern>
+    <linearGradient id="panel" x2="0" y2="1"><stop stop-color="#1e2b37"/><stop offset="1" stop-color="#141e29"/></linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10" fill="#5bd8ed"/></marker>
+    <marker id="greenArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 10 5 0 10" fill="#a3e7a5"/></marker>
+  </defs>
+  <rect width="1600" height="900" fill="#10161e"/>
+  <rect width="1600" height="900" fill="url(#grid)"/>
+  <rect x="65" y="62" width="6" height="117" fill="#a3e7a5"/>
+  <g font-family="ui-monospace, SFMono-Regular, Consolas, monospace">
+    <text x="100" y="90" fill="#a3e7a5" font-size="20" letter-spacing="4">EECS 470 / SYSTEMVERILOG</text>
+    <text x="96" y="149" fill="#edf6ff" font-size="48" font-weight="700">OUT-OF-ORDER PROCESSOR</text>
+    <text x="100" y="188" fill="#8da3b9" font-size="22">2-way superscalar · LC2K · Fall 2026</text>
+
+    <g fill="none" stroke="#5bd8ed" stroke-width="4" marker-end="url(#arrow)">
+      <path d="M340 465H420"/>
+      <path d="M730 465H788V365H840"/>
+      <path d="M788 465V490H840"/>
+      <path d="M788 490V615H840"/>
+      <path d="M1090 365H1140V465H1200"/>
+      <path d="M1090 490H1140" marker-end="none"/>
+      <path d="M1090 615H1140V490" marker-end="none"/>
+    </g>
+    <g fill="none" stroke="#a3e7a5" stroke-width="3" stroke-dasharray="9 9" marker-end="url(#greenArrow)">
+      <path d="M965 307V255H225V305"/>
+      <path d="M1140 490V730H575V620"/>
+    </g>
+    <text x="490" y="241" fill="#a3e7a5" font-size="18">BRANCH PREDICTION + RECOVERY</text>
+    <text x="865" y="719" fill="#a3e7a5" font-size="18">RESULT FORWARDING</text>
+
+    <rect x="110" y="315" width="230" height="300" rx="14" fill="url(#panel)" stroke="#435969" stroke-width="2"/>
+    <text x="140" y="355" fill="#8da3b9" font-size="17" letter-spacing="2">FRONTEND</text>
+    <text x="140" y="407" fill="#edf6ff" font-size="29" font-weight="700">FETCH</text>
+    <text x="140" y="441" fill="#edf6ff" font-size="29" font-weight="700">+ DECODE</text>
+    <path d="M140 472H310" stroke="#435969"/>
+    <text x="140" y="512" fill="#a8bfd0" font-size="19">SRAM I-cache</text>
+    <text x="140" y="545" fill="#a8bfd0" font-size="19">Prefetching</text>
+    <text x="140" y="578" fill="#a8bfd0" font-size="19">Banked BTB</text>
+
+    <rect x="430" y="315" width="300" height="300" rx="14" fill="url(#panel)" stroke="#5bd8ed" stroke-width="2"/>
+    <text x="460" y="355" fill="#5bd8ed" font-size="17" letter-spacing="2">SCHEDULER</text>
+    <text x="460" y="405" fill="#edf6ff" font-size="29" font-weight="700">MICRO-OP</text>
+    <text x="460" y="440" fill="#edf6ff" font-size="29" font-weight="700">QUEUE</text>
+    <g fill="#203b49" stroke="#436276">
+      <rect x="460" y="470" width="48" height="40" rx="5"/>
+      <rect x="518" y="470" width="48" height="40" rx="5" fill="#315d57" stroke="#a3e7a5"/>
+      <rect x="576" y="470" width="48" height="40" rx="5"/>
+      <rect x="634" y="470" width="48" height="40" rx="5" fill="#315d57" stroke="#a3e7a5"/>
+    </g>
+    <text x="460" y="553" fill="#a3e7a5" font-size="21">ISSUE UP TO 2 / CYCLE</text>
+    <text x="460" y="585" fill="#a8bfd0" font-size="18">Hazards + memory order</text>
+
+    <g fill="url(#panel)" stroke="#5bd8ed" stroke-width="2">
+      <rect x="850" y="315" width="240" height="100" rx="14"/>
+      <rect x="850" y="440" width="240" height="100" rx="14"/>
+      <rect x="850" y="565" width="240" height="100" rx="14"/>
+    </g>
+    <text x="880" y="377" fill="#edf6ff" font-size="34" font-weight="700">ALU 0</text>
+    <text x="880" y="502" fill="#edf6ff" font-size="34" font-weight="700">ALU 1</text>
+    <text x="880" y="627" fill="#edf6ff" font-size="32" font-weight="700">LOAD/STORE</text>
+
+    <rect x="1210" y="390" width="280" height="155" rx="14" fill="url(#panel)" stroke="#435969" stroke-width="2"/>
+    <text x="1240" y="438" fill="#edf6ff" font-size="29" font-weight="700">WRITEBACK</text>
+    <path d="M1240 460H1460" stroke="#435969"/>
+    <text x="1240" y="503" fill="#a8bfd0" font-size="23">Register file</text>
+
+    <path d="M100 790H1500" stroke="#344452"/>
+    <text x="100" y="832" fill="#8da3b9" font-size="18">HIGH-LEVEL ARCHITECTURE</text>
+    <text x="1500" y="832" text-anchor="end" fill="#5bd8ed" font-size="18">SIMULATION + SYNTHESIS VERIFIED</text>
+  </g>
+</svg>
