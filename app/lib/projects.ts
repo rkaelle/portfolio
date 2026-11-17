@@ -73,6 +73,26 @@ export const projectsData: ProjectItem[] = [
     year: '2026'
   },
   {
+    id: 'umich-threejs',
+    title: 'U-M 3D Campus',
+    summary: 'Explore Ann Arbor in an interactive Three.js campus model built from OpenStreetMap, elevation data, and LiDAR.',
+    description: 'A browser-based 3D model of the University of Michigan campus with streamed terrain and buildings, first-person exploration, and walking directions. An offline pipeline turns OpenStreetMap and USGS elevation and LiDAR data into static tiles for the renderer.',
+    tech: ['Three.js', 'TypeScript', 'Python', 'OpenStreetMap', 'LiDAR'],
+    tag: 'Full Stack',
+    showOnHome: true,
+    highlight: true,
+    image: '/assets/umich-threejs.png',
+    links: { demo: 'https://umich-threejs.vercel.app/' },
+    features: [
+      'Orbit, free-fly, and first-person walking controls',
+      'Offline geospatial pipeline for terrain, building geometry, and vegetation',
+      'Tile streaming and level of detail for campus-scale rendering',
+      'Building search and A* walking directions',
+      'Time-of-day lighting and campus quick-jumps'
+    ],
+    year: '2026'
+  },
+  {
     id: 'smart-glasses',
     title: 'AR Navigation Glasses for Athletes',
     summary: 'ESP32-based heads-up display glasses with turn-by-turn navigation, custom route uploading, and GPS/IMU fusion.',
@@ -401,7 +421,19 @@ export const projectsData: ProjectItem[] = [
     tag: 'Embedded',
     spotlight: false,
     image: '/assets/rocket.jpeg'
+  },
+  {
+    id: 'did-you-fuck-up',
+    title: 'Did You Fuck Up?',
+    summary: 'A deliberately over-serious paper applying Bayesian decision theory to the question of whether you messed up.',
+    description: 'An ironic eight-page LaTeX paper that separates bad outcomes from bad decisions, then asks when repair is worth pursuing. The joke is the academic treatment; the manuscript includes formal propositions, counterfactual bounds, and reproducible numerical checks.',
+    tech: ['LaTeX', 'Python', 'Bayesian Decision Theory'],
+    tag: 'Tools',
+    image: '/assets/did-you-fuck-up.png',
+    links: { demo: '/papers/did-you-fuck-up.pdf' },
+    year: '2026'
   }
+
 ];
 
 
