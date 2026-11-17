@@ -1,43 +1,73 @@
-# Security changes and deployment requirements
+# Security policy and deployment
 
-## Implemented in the application
+## Reporting an issue
 
-- Next.js 16.4.2, React 19.3.1, and Firebase 13.1.0 replace the outdated releases.
-- npm is the package manager; `package-lock.json` is the single lockfile. Use Node.js 24 (`nvm use`).
-- A same-major override updates Firebase's pinned gRPC dependency to a patched release. Recheck it when updating Firebase.
-- Browser headers block embedding, MIME sniffing, plugins, and unexpected network destinations. Production CSP prohibits `eval`. Inline scripts remain allowed for statically generated Next.js hydration; this is not a nonce-based XSS defense.
-- Image optimization is limited to HTTPS gallery objects under `photos/` in the configured Firebase bucket. SVG optimization is disabled.
-- Unsubscribe requests use Firebase email-link verification. Only after completing the link does the browser query/delete that verified address's subscriptions. The response to sending a link does not disclose subscription status, and sessions remain in memory.
-- Analytics are excluded from `/manage` and `/upload`. These pages send no referrer, and email-link credentials are removed from the address bar after loading and kept only in memory until confirmation.
-- File selection and submission reject empty files, files larger than 5 MB, unsupported MIME types, and mismatched PNG/JPEG/PDF signatures. These are user feedback checks; a browser can bypass them, so they do not replace backend enforcement.
-- `/upload` requires email/password sign-in and a server-fetched owner access record. The form is not rendered until that account's Firebase UID matches the one owner record, and it is unmounted on sign-out. Sessions remain in memory and there is no sign-up flow.
-- Firestore and Storage rules enforce the same owner UID independently. Booking fields are validated, upload sizes/MIME types and filenames are bounded, and uploads must reference an owner-created booking. New records store private Storage paths rather than shareable download URLs.
-- App Check initialization is wired to `NEXT_PUBLIC_RECAPTCHA_ENTERPRISE_SITE_KEY`. It remains inactive until a real registered key is configured, and protection requires enforcement in Firebase.
+Please use the repository's GitHub private vulnerability reporting feature when available. If it is unavailable, contact the maintainer through a verified contact channel listed at rkaelle.com. Do not put credentials, subscriber details, or sensitive attachments in public issues.
 
-## Firebase changes are not deployed
+## Public repository boundaries
 
-No authenticated Firebase CLI session or deployed rules were available during this work. The checked-in rules were tested with synthetic records in local Firestore and Storage emulators. They have not changed production permissions.
+Application source, dependency lockfiles, Firebase rules, security tests, and the empty `.env.example` belong in Git. Local environment files, service-account credentials, cloud CLI state, logs, and detailed audit reports do not. `.gitignore` prevents accidental additions; it does not remove files from previous commits. If a credential is exposed, revoke/rotate it before considering a history cleanup.
 
-Before deployment:
+Firebase web-app configuration is public by design. `NEXT_PUBLIC_*` values are embedded in browser JavaScript. Never use that prefix for administrative secrets. All assets under `public/` are public, regardless of authentication elsewhere in the application.
 
-1. Export and review the existing Firestore and Storage rules. Merge any rules needed by other apps sharing this project; these files otherwise deny access to unmatched paths.
-2. `/upload` is **owner-only**. In Firebase Authentication, identify the owner's existing Email/Password account (or manually create that one account), and copy its UID. Deploy the reviewed Firestore/Storage rules **before** configuring access, then use the Firebase Console or a trusted Admin SDK to set Firestore document `_access/uploadOwner` to `{ uid: <that exact Firebase UID> }`. No email-based wildcard or public sign-up grants access. Browser clients, including the owner, cannot create or change this document. Access stays denied while it is missing. The Storage rules' Firestore lookup also requires the Firebase Storage service agent's cross-service permissions; Firebase prompts for them when enabling this feature. Do not overwrite unrelated rules or grant public access to identity paths.
-3. Enable Firebase Authentication's Email/Password provider and **Email link (passwordless sign-in)**. Add the production domain to Authorized domains and verify the email template/action links. Confirm unsubscribe end to end with a test address. No live verification emails were sent during local tests.
-4. New subscriptions are normalized to lowercase. Existing mixed-case addresses need a trusted normalization/deduplication migration before relying on exact email queries; no existing subscriber data was modified.
-5. Register this web app with Firebase App Check's reCAPTCHA Enterprise provider. Set the public site key in deployment environment variables. After confirming legitimate requests receive valid tokens, enable enforcement for Firestore and Storage. Public create access alone is not spam prevention; monitor usage and billing and add a rate-limited ingestion service if needed.
-6. Review previously stored `headshotUrl`/`signatureUrl` values and existing Storage download tokens through trusted admin access. Existing shared download URLs may need token revocation; new rules alone do not revoke them. New submissions use `headshotPath`/`signaturePath`; adapt any external administrative tooling to read those private paths using authorized access. No live identity records or files were read during this work.
-7. Deploy the application and reviewed rules together after those prerequisites are satisfied. Verify anonymous subscriber reads/deletes and private file reads are denied in production without retrieving real private records.
+## Firebase access policy
 
-## Checks
+| Resource | Browser access |
+|---|---|
+| Firestore `emails` | Create validated subscriptions; no anonymous reads, updates, or deletes |
+| Own subscription | A verified-email session can query/delete only records matching its token email |
+| Other Firestore paths | Denied |
+| Storage `photos/` | Public read/list; no browser writes |
+| Other Storage paths | Denied |
 
-Run `npm run test:security` for header configuration, image restrictions, and upload validation. After `npm run build` and `npm start`, run `npm run test:seo` and `npm run test:security:http` against the built site. Override the local origin with `SEO_BASE_URL` if using a different port.
+The checked-in rules implement this policy. They are deployed independently from Vercel. Trusted Daily News jobs using an Admin SDK are authorized through IAM; do not grant public subscriber reads to accommodate a sender. Review shared-project requirements and least-privilege service-account access before changing rules.
 
-Rules tests require Java 21+ and the Firebase CLI:
+Newsletter unsubscribe requires Firebase email-link authentication, authorized application domains, and a working email action template. New subscriptions are lowercased. Historical mixed-case addresses may require trusted normalization/deduplication before exact-match unsubscribe queries work. Test delivery and unsubscribe using a test address after authentication or rule changes.
+
+## Deploying rules
+
+Export/review the active rules first and run the emulator tests. Then deploy the reviewed files to an explicitly selected project:
 
 ```sh
-npx firebase-tools emulators:exec --project demo-portfolio-security --only firestore,storage "npm run test:rules"
+firebase deploy --project YOUR_PROJECT_ID --only firestore:rules,storage
 ```
 
-The rules tests require emulator environment variables and cannot silently fall back to production. They cover subscriber ownership, anonymous access, schema validation, gallery immutability, owner-only identity access, owner configuration tampering, and upload restrictions. The HTTP checks confirm that anonymous visitors receive sign-in rather than the identity form.
+Set the local Firebase project in `.env.local` and verify anonymous reads after deployment:
 
-`npm audit --omit=dev` checks the production dependency tree. Tailwind 3's build-time dependency chain still has development-only advisories, including an unpatched brace-parser denial of service. It parses trusted source/configuration during builds; it does not run in deployed request handlers. Addressing that remaining chain requires a Tailwind major migration and visual regression checks.
+```sh
+npm run audit:firebase
+```
+
+This read-only check constrains every query to a random nonexistent document ID. All queries must return HTTP 403. It does not prove write restrictions, Storage permissions, IAM, or access-log status. Review those separately through authenticated admin access. Never run destructive tests against production.
+
+Retired records/files remain private under the default-deny rules, but removing application code does not delete data or invalidate existing shareable Storage download tokens. Review retention and revoke sensitive download tokens through trusted administrative access when appropriate.
+
+## Abuse controls and application defenses
+
+- Newsletter signup permits schema-validated anonymous creates. Rules do not provide per-IP rate limiting or verify the submitting address. Review confirmed subscriptions, duplicate handling, quotas, and billing alerts as additional controls.
+- App Check initialization requires `NEXT_PUBLIC_RECAPTCHA_ENTERPRISE_SITE_KEY`. Register the app, validate legitimate traffic, then enable enforcement. Enabling enforcement before the client is configured can break the gallery and subscriptions. App Check supplements authorization.
+- Security headers restrict embedding, MIME sniffing, plugins, network destinations, and powerful browser APIs. Production CSP prohibits eval but allows inline hydration scripts; strict nonce/hash enforcement is not implemented.
+- Image optimization accepts only HTTPS gallery objects in the configured Firebase bucket. SVG optimization is disabled.
+- `/manage` excludes analytics and sends no referrer. One-time unsubscribe credentials are removed from the address bar and held in memory; email-link sessions use memory-only persistence.
+- Keep Next.js, React, Firebase, and build tools patched. Use `npm audit --omit=dev` for production packages and `npm audit` for the full tree; evaluate advisories against actual application usage.
+
+## Verification
+
+Use Node.js 24 and the committed npm lockfile:
+
+```sh
+npm ci
+npm run test:security
+npm run build
+npm start
+```
+
+In another terminal, run `npm run test:seo` and `npm run test:security:http`. Set `SEO_BASE_URL` for a different local port.
+
+Firebase rules tests require Java 21+ and the Firebase CLI:
+
+```sh
+firebase emulators:exec --project demo-portfolio-security --only firestore,storage "npm run test:rules"
+```
+
+The rules suite refuses to run without emulator environment variables. It checks subscription schema/ownership, denied private paths, immutable public gallery objects, and denied non-gallery Storage paths.

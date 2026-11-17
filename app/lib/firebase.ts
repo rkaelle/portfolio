@@ -1,7 +1,7 @@
 'use client';
 
 import { FirebaseError, initializeApp, getApps } from 'firebase/app';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 import { getStorage } from 'firebase/storage';
 import { getFirestore } from 'firebase/firestore';
 import { initializeAppCheck, ReCaptchaEnterpriseProvider } from 'firebase/app-check';
@@ -44,4 +44,4 @@ if (typeof window !== 'undefined' && appCheckSiteKey) {
     }
 }
 
-export { db, auth, storage, signInWithEmailAndPassword };
+export { db, auth, storage };

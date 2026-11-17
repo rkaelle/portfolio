@@ -4,7 +4,7 @@ import { test } from 'node:test';
 const baseURL = process.env.SEO_BASE_URL || 'http://127.0.0.1:3000';
 
 test('production pages return the configured browser security protections', async () => {
-  for (const path of ['/', '/projects', '/projects/hill-street-planes', '/gallery', '/manage', '/upload']) {
+  for (const path of ['/', '/projects', '/projects/hill-street-planes', '/gallery', '/manage']) {
     const response = await fetch(new URL(path, baseURL));
     assert.equal(response.status, 200, path);
     assert.equal(response.headers.get('x-frame-options'), 'DENY', path);
@@ -14,7 +14,7 @@ test('production pages return the configured browser security protections', asyn
     assert.ok(policy.includes("object-src 'none'"), path);
     assert.ok(!policy.includes('unsafe-eval'), path);
     assert.ok(!response.headers.has('x-powered-by'), path);
-    const privatePage = path === '/upload' || path === '/manage';
+    const privatePage = path === '/manage';
     assert.equal(response.headers.get('referrer-policy'), privatePage ? 'no-referrer' : 'strict-origin-when-cross-origin');
     const html = await response.text();
     if (privatePage) {
@@ -37,13 +37,12 @@ test('image optimizer rejects external origins and non-gallery Firebase paths', 
   }
 });
 
-test('the anonymous upload response renders sign-in without exposing the identity form', async () => {
-  const response = await fetch(new URL('/upload', baseURL));
-  assert.equal(response.status, 200);
-  const html = (await response.text()).replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, '');
-  assert.ok(html.includes('Owner sign-in'));
-  assert.ok(html.includes('type="password"'));
-  assert.ok(!html.includes('Submit Booking'));
-  assert.ok(!html.includes('Driver'));
-  assert.ok(!html.includes('Photo Uploads'));
+test('retired upload URLs return a real 404', async () => {
+  for (const path of ['/upload', '/upload/']) {
+    const response = await fetch(new URL(path, baseURL));
+    assert.equal(response.status, 404, path);
+    const html = await response.text();
+    assert.ok(!html.includes('Owner sign-in'));
+    assert.ok(!html.includes('Submit Booking'));
+  }
 });

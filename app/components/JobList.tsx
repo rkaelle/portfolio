@@ -50,7 +50,7 @@ const experienceItems: JobCategories = {
     },
     "MERO": {
       jobTitle: "Avionics Lead",
-      duration: "September 2025 - Present",
+      duration: "August 2025 - May 2026",
       desc: [
         "Lead cross-functional avionics team of 10 students designing integrated flight control, telemetry, and power systems for high-powered rocket competing in Spaceport America Cup.",
         "Architected layered avionics stack: sensor drivers (IMU/GNSS/altimeter/thermocouples) → state estimation & data fusion (attitude/altitude estimators) → flight control (GNC) → actuator interfaces (linear actuators, stepper motors, EDF roll control, solenoids).",
@@ -60,7 +60,7 @@ const experienceItems: JobCategories = {
     },
     "Z Lab": {
       jobTitle: "Swarm Intelligence Robotics Chassis Team Lead",
-      duration: "January 2024 - Present",
+      duration: "January 2024 - May 2025",
       desc: [
         "Lead chassis team in integrating LiDAR, depth camera, and IMU for SLAM and real-time navigation using ROS.",
         "Developed sensor fusion algorithms in Python, optimizing environmental awareness and autonomous decision-making.",
@@ -70,7 +70,7 @@ const experienceItems: JobCategories = {
     },
     "HELIOS": {
       jobTitle: "Co-Founder",
-      duration: "November 2023 - Present",
+      duration: "Founded October 2023",
       desc: [
         "Co-founded the company, securing $15k+ in funding; designed and maintained the company website; filed a provisional patent (63/547158) for aviation technology.",
         "Researched advanced energy storage and propulsion technologies, optimized aircraft performance, and integrated advanced components into prototypes.",
@@ -89,13 +89,14 @@ const experienceItems: JobCategories = {
   },
   "Crypto": {
     "Michigan Blockchain Club": {
-      jobTitle: "Executive Board Member & Investment Team Member",
-      duration: "August 2023 - Present",
+      jobTitle: "Board Member",
+      duration: "April 2025 - January 2026",
       desc: [
-        "Lead recruitment initiatives, increasing active membership to over 100 students.",
-        "Manage a 35 ETH investment portfolio, overseeing strategic positions.",
-        "Organize the Midwest Blockchain Conference — sourced speakers, sponsors, and coordinated with 35+ student organizations and 16 companies; achieved over 1,000 signups, making it one of the largest student-run events nationwide.",
-        "Source developer projects, hackathons, and events to enhance club offerings and member engagement."
+        "Previously Vice President of Recruitment (August 2024 - April 2025); joined as a member in August 2023.",
+        "Led recruitment initiatives, increasing active membership to over 100 students.",
+        "Managed a 35 ETH investment portfolio, overseeing strategic positions.",
+        "Organized the Midwest Blockchain Conference — sourced speakers, sponsors, and coordinated with 35+ student organizations and 16 companies; achieved over 1,000 signups, making it one of the largest student-run events nationwide.",
+        "Sourced developer projects, hackathons, and events to enhance club offerings and member engagement."
       ],
     },
     "Renaud Partners": {

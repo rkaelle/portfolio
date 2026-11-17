@@ -59,7 +59,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               url: SITE_URL,
               sameAs: [
                 'https://github.com/rkaelle',
-                'https://www.linkedin.com/in/ryankaelle/'
+                'https://www.linkedin.com/in/ryan-kaelle/'
               ],
               address: {
                 '@type': 'PostalAddress',

@@ -17,7 +17,6 @@ const nextConfig = {
   async headers() {
     return [
       { source: '/:path*', headers: securityHeaders(process.env.NODE_ENV === 'development') },
-      { source: '/upload/:path*', headers: [{ key: 'Referrer-Policy', value: 'no-referrer' }] },
       { source: '/manage/:path*', headers: [{ key: 'Referrer-Policy', value: 'no-referrer' }] },
     ];
   },

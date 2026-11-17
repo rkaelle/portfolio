@@ -1,7 +1,10 @@
 {
-  "name": "cally-fashion",
+  "name": "rkaelle-portfolio",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "24.x"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,15 +12,16 @@
     "test:seo": "node --test tests/seo.test.mjs",
     "test:security": "node --test tests/security.test.mjs",
     "test:rules": "node --test tests/firebase-rules.test.mjs",
-    "test:security:http": "node --test tests/security-http.test.mjs"
+    "test:security:http": "node --test tests/security-http.test.mjs",
+    "audit:firebase": "node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/audit-firebase.mjs"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.1",
-    "@next/third-parties": "^16.4.2",
+    "@next/third-parties": "~16.4.6",
     "@vercel/analytics": "^1.5.0",
     "firebase": "^13.1.0",
     "framer-motion": "^11.0.3",
-    "next": "^16.4.2",
+    "next": "~16.4.6",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },

@@ -1,40 +1,47 @@
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
-
-# testing
-/coverage
-
-# next.js
+# Dependencies and generated output
+node_modules/
+.pnp.*
 /.next/
 /out/
+/build/
+/coverage/
+*.tsbuildinfo
+next-env.d.ts
 
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-firebase-debug.log*
-firestore-debug.log*
-ui-debug.log*
-.firebase/
-yarn-debug.log*
-yarn-error.log*
-
-# local env files
-.env*.local
+# Local environment and cloud credentials; commit only the empty template
 .env
 .env.*
 !.env.example
+.vercel/
+.firebase/
+/.secrets/
+/secrets/
+*firebase-adminsdk*.json
+*service-account*.json
+*service_account*.json
+*serviceAccount*.json
+application_default_credentials.json
+/credentials*.json
+*.pem
+*.key
+*.p12
+*.pfx
 
-# vercel
-.vercel
+# Logs, local audits, and generated security reports
+*.log
+*.log.*
+/SECURITY_AUDIT_*.md
+/security-reports/
+/gitleaks*.json
+*.sarif
 
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+# Local editor/agent settings and OS files
+.claude/settings.local.json
+/.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.bak
+*.orig
+*.rej

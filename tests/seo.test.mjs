@@ -66,12 +66,16 @@ test('sitemap lists canonical public pages and fully rendered project pages', as
 });
 
 test('homepage exposes the complete heading, experience, and project links without JavaScript', async () => {
-  const html = contentHTML(await (await get('/')).text());
+  const rawHTML = await (await get('/')).text();
+  const html = contentHTML(rawHTML);
   assert.match(html, /<h1\b[^>]*>[\s\S]*?Ryan Kaelle[\s\S]*?<\/h1>/);
-  for (const text of ['Zipline (2026)', 'Optica', 'Michigan Blockchain Club', 'Owned electrical and controls architecture', '1012 Hill Street Planes']) {
+  for (const text of ['Zipline (2026)', 'Optica', 'Michigan Blockchain Club', 'Owned electrical and controls architecture', '1012 Hill Street Planes', '2-Way Out-of-Order LC2K Processor', 'August 2025 - May 2026', 'January 2024 - May 2025', 'Founded October 2023', 'April 2025 - January 2026', 'August 2024 - April 2025', "Subscribe to Ryan&#x27;s Daily News"]) {
     assert.ok(html.includes(text), `Missing server-rendered content: ${text}`);
   }
   assert.match(html, /href="\/projects\/hill-street-planes"/);
+  assert.match(html, /href="\/projects\/out-of-order-processor"/);
+  assert.ok(rawHTML.includes('https://www.linkedin.com/in/ryan-kaelle/'));
+  assert.ok(!rawHTML.includes('https://www.linkedin.com/in/ryankaelle/'));
   const projectHTML = contentHTML(await (await get('/projects')).text());
   const sitemap = await (await get('/sitemap.xml')).text();
   for (const [, url] of sitemap.matchAll(/<loc>([^<]+\/projects\/[^<]+)<\/loc>/g)) {
@@ -80,7 +84,7 @@ test('homepage exposes the complete heading, experience, and project links witho
 });
 
 test('utility flows are noindex but remain crawlable', async () => {
-  for (const path of ['/manage', '/upload']) {
+  for (const path of ['/manage']) {
     const response = await get(path);
     assert.equal(response.status, 200);
     const html = await response.text();

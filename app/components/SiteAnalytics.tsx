@@ -6,8 +6,8 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 
 export default function SiteAnalytics() {
   const pathname = usePathname();
-  // Verification URLs contain one-time credentials; identity forms are private.
-  if (pathname === '/manage' || pathname.startsWith('/manage/') || pathname === '/upload' || pathname.startsWith('/upload/')) return null;
+  // Newsletter verification URLs contain one-time credentials.
+  if (pathname === '/manage' || pathname.startsWith('/manage/')) return null;
 
   return (
     <>

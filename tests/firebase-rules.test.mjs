@@ -20,25 +20,6 @@ after(async () => { await environment?.cleanup(); });
 beforeEach(async () => { await environment.clearFirestore(); await environment.clearStorage(); });
 
 const subscription = (email = 'owner@example.com') => ({ firstName: 'Test', lastName: 'Subscriber', email, time: serverTimestamp() });
-const ownerUid = 'upload-owner';
-const booking = () => ({
-  ownerUid,
-  contact: { type: 'phone', value: '555-0100' },
-  name: { first: 'Test', middle: '', last: 'Person' },
-  gender: 'Prefer not to say', eyeColor: 'Brown', hairColor: 'Black',
-  dob: '1990-01-01', height: '5-10', weight: '150',
-  address: { state: '', street: '', city: '', zip: '' },
-  driversLicense: { number: '', issueDate: '' },
-  organDonor: false, moreThanTwoJumps: null, paid: false,
-  submittedAt: serverTimestamp(),
-});
-
-async function configureOwner() {
-  await environment.withSecurityRulesDisabled(async (context) => {
-    await setDoc(doc(context.firestore(), '_access', 'uploadOwner'), { uid: ownerUid });
-  });
-}
-
 test('anonymous subscription creation validates fields and cannot read, edit, or delete subscribers', async () => {
   const db = environment.unauthenticatedContext().firestore();
   const record = doc(db, 'emails', 'subscriber');
@@ -76,102 +57,42 @@ test('only a verified owner can query and delete their own subscription', async 
   await assertSucceeds(deleteDoc(doc(owner, 'emails', 'owner')));
 });
 
-test('identity documents cannot be read, listed, or written by web clients', async () => {
+test('all non-newsletter documents deny reads and writes, including retired data and owner config', async () => {
+  const paths = ['skydiving_bookings/private', '_access/uploadOwner', 'private/record'];
   await environment.withSecurityRulesDisabled(async (context) => {
-    await setDoc(doc(context.firestore(), 'skydiving_bookings', 'private'), { name: 'Private' });
+    for (const path of paths) await setDoc(doc(context.firestore(), path), { private: true });
   });
-  for (const context of [environment.unauthenticatedContext(), environment.authenticatedContext('visitor')]) {
-    const db = context.firestore();
-    await assertFails(getDoc(doc(db, 'skydiving_bookings', 'private')));
-    await assertFails(getDocs(collection(db, 'skydiving_bookings')));
-    await assertFails(setDoc(doc(db, 'skydiving_bookings', 'forged'), { paid: true }));
-  }
-});
-
-test('upload access fails closed when no owner is configured', async () => {
-  const owner = environment.authenticatedContext(ownerUid).firestore();
-  await assertFails(getDoc(doc(owner, '_access', 'uploadOwner')));
-  await assertFails(setDoc(doc(owner, 'skydiving_bookings', 'booking'), booking()));
-  await assertFails(uploadBytes(ref(environment.authenticatedContext(ownerUid).storage(), 'skydiving/booking/headshot'), new Uint8Array([1]), {
-    contentType: 'image/png', customMetadata: { ownerUid },
-  }));
-});
-
-test('the single owner configuration cannot be claimed or changed by web clients', async () => {
-  await configureOwner();
-  const owner = environment.authenticatedContext(ownerUid).firestore();
-  await assertSucceeds(getDoc(doc(owner, '_access', 'uploadOwner')));
-  await assertFails(setDoc(doc(owner, '_access', 'uploadOwner'), { uid: 'replacement' }));
-  await assertFails(deleteDoc(doc(owner, '_access', 'uploadOwner')));
-  for (const context of [environment.unauthenticatedContext(), environment.authenticatedContext('visitor', { email: 'owner@example.com', admin: true })]) {
-    const db = context.firestore();
-    await assertFails(getDoc(doc(db, '_access', 'uploadOwner')));
-    await assertFails(getDocs(collection(db, '_access')));
-    await assertFails(setDoc(doc(db, '_access', 'uploadOwner'), { uid: 'visitor' }));
-  }
-});
-
-test('only the configured UID can create and manage identity submissions', async () => {
-  await configureOwner();
-  const owner = environment.authenticatedContext(ownerUid).firestore();
-  const record = doc(owner, 'skydiving_bookings', 'booking');
-  await assertSucceeds(setDoc(record, booking()));
-  await assertSucceeds(getDoc(record));
-  await assertSucceeds(getDocs(collection(owner, 'skydiving_bookings')));
-  await assertSucceeds(updateDoc(record, {
-    headshotPath: 'skydiving/booking/headshot', signaturePath: 'skydiving/booking/signature',
-  }));
-  await assertFails(updateDoc(record, { paid: true }));
-  await assertFails(updateDoc(record, { ownerUid: 'visitor' }));
-  await assertFails(updateDoc(record, { headshotPath: 'https://example.com/shared-file' }));
-  for (const invalid of [
-    { ...booking(), ownerUid: 'visitor' }, { ...booking(), paid: true },
-    { ...booking(), name: { first: 'a'.repeat(101), middle: '', last: 'Person' } },
-    { ...booking(), unexpected: 'field' },
-    { ...booking(), headshotUrl: 'https://example.com/shared-file' },
+  for (const context of [
+    environment.unauthenticatedContext(),
+    environment.authenticatedContext('former-owner', { email: 'owner@example.com', email_verified: true, admin: true }),
   ]) {
-    await assertFails(setDoc(doc(collection(owner, 'skydiving_bookings')), invalid));
-  }
-  for (const context of [environment.unauthenticatedContext(), environment.authenticatedContext('visitor', { email: 'owner@example.com', email_verified: true })]) {
     const db = context.firestore();
-    await assertFails(getDoc(doc(db, 'skydiving_bookings', 'booking')));
-    await assertFails(setDoc(doc(db, 'skydiving_bookings', 'forged'), booking()));
-    await assertFails(deleteDoc(doc(db, 'skydiving_bookings', 'booking')));
-  }
-  await assertSucceeds(deleteDoc(record));
-});
-
-test('owner uploads enforce size, MIME type, metadata, filenames, and booking ownership', async () => {
-  await configureOwner();
-  const owner = environment.authenticatedContext(ownerUid);
-  await assertSucceeds(setDoc(doc(owner.firestore(), 'skydiving_bookings', 'booking'), booking()));
-  const storage = owner.storage();
-  const metadata = { contentType: 'image/png', customMetadata: { ownerUid } };
-  const file = ref(storage, 'skydiving/booking/headshot');
-  await assertSucceeds(uploadBytes(file, new Uint8Array([1, 2, 3]), metadata));
-  await assertSucceeds(getBytes(file));
-  await assertFails(uploadBytes(file, new Uint8Array(), metadata));
-  await assertFails(uploadBytes(file, new Uint8Array(5 * 1024 * 1024 + 1), metadata));
-  await assertFails(uploadBytes(file, new Uint8Array([1]), { ...metadata, contentType: 'image/svg+xml' }));
-  await assertFails(uploadBytes(file, new Uint8Array([1]), { ...metadata, customMetadata: { ownerUid: 'visitor' } }));
-  await assertFails(uploadBytes(ref(storage, 'skydiving/booking/arbitrary-file'), new Uint8Array([1]), metadata));
-  await assertFails(uploadBytes(ref(storage, 'skydiving/missing/headshot'), new Uint8Array([1]), metadata));
-  for (const context of [environment.unauthenticatedContext(), environment.authenticatedContext('visitor')]) {
-    await assertFails(getBytes(ref(context.storage(), 'skydiving/booking/headshot')));
-    await assertFails(uploadBytes(ref(context.storage(), 'skydiving/booking/signature'), new Uint8Array([1]), metadata));
+    for (const path of paths) {
+      const record = doc(db, path);
+      await assertFails(getDoc(record));
+      await assertFails(getDocs(collection(db, path.split('/')[0])));
+      await assertFails(setDoc(record, { replaced: true }));
+      await assertFails(deleteDoc(record));
+    }
   }
 });
 
-test('gallery objects are public and immutable; identity uploads are private', async () => {
+test('gallery objects are public and immutable; every other storage path is denied', async () => {
   await environment.withSecurityRulesDisabled(async (context) => {
     await uploadBytes(ref(context.storage(), 'photos/public.png'), new Uint8Array([1, 2, 3]));
     await uploadBytes(ref(context.storage(), 'skydiving/private/headshot'), new Uint8Array([4, 5, 6]));
+    await uploadBytes(ref(context.storage(), 'private/document'), new Uint8Array([4, 5, 6]));
   });
-  const storage = environment.unauthenticatedContext().storage();
-  await assertSucceeds(getBytes(ref(storage, 'photos/public.png')));
-  await assertSucceeds(listAll(ref(storage, 'photos')));
-  await assertFails(uploadBytes(ref(storage, 'photos/overwrite.png'), new Uint8Array([0])));
-  await assertFails(getBytes(ref(storage, 'skydiving/private/headshot')));
-  await assertFails(listAll(ref(storage, 'skydiving')));
-  await assertFails(uploadBytes(ref(storage, 'skydiving/private/forged'), new Uint8Array([0])));
+  for (const context of [environment.unauthenticatedContext(), environment.authenticatedContext('former-owner')]) {
+    const storage = context.storage();
+    await assertSucceeds(getBytes(ref(storage, 'photos/public.png')));
+    await assertSucceeds(listAll(ref(storage, 'photos')));
+    await assertFails(uploadBytes(ref(storage, 'photos/public.png'), new Uint8Array([0])));
+    await assertFails(uploadBytes(ref(storage, 'photos/new.png'), new Uint8Array([0])));
+    for (const path of ['skydiving/private/headshot', 'private/document']) {
+      await assertFails(getBytes(ref(storage, path)));
+      await assertFails(uploadBytes(ref(storage, path), new Uint8Array([0])));
+      await assertFails(listAll(ref(storage, path.split('/')[0])));
+    }
+  }
 });

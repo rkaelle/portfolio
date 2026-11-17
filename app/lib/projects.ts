@@ -27,6 +27,28 @@ export interface ProjectItem {
 
 export const projectsData: ProjectItem[] = [
   {
+    id: 'out-of-order-processor',
+    title: '2-Way Out-of-Order LC2K Processor',
+    summary: 'SystemVerilog superscalar processor with dual-issue scheduling, dynamic branch prediction, and an SRAM instruction cache.',
+    description: 'Built a 2-way superscalar out-of-order LC2K processor on a four-person team for the Fall 2026 EECS 470 final project. The design decouples the frontend and backend with a micro-op queue, executes independent instructions across two ALUs and one load/store unit, and preserves architectural correctness through hazard checks and ordered memory operations.',
+    tech: ['SystemVerilog', 'Computer Architecture', 'RTL', 'Simulation', 'Synthesis'],
+    tag: 'Embedded',
+    showOnHome: true,
+    highlight: true,
+    features: [
+      'Priority selector issues up to two micro-ops per cycle out of order from a window of three or more operations',
+      'RAW/WAW hazard checks and memory ordering around stores',
+      'Split execute and writeback stages with pipeline-register and same-cycle ALU-to-ALU forwarding',
+      'Two ALUs and one load/store unit let independent ALU operations pass stalled loads',
+      'Banked branch target buffer, dynamic branch prediction, and wrong-path squashing',
+      'SRAM instruction cache and prefetching ahead of single-ported, multi-cycle memory',
+      'Self-checking micro-op queue testbench and design-space sweeps of cache, queue, and branch-predictor sizes'
+    ],
+    challenges: 'Coordinated dual-issue selection, forwarding, branch recovery, and single-port memory access while splitting register-offset loads and stores into single-unit micro-ops. Evaluated clock period, CPI, time per instruction, area, and power across configuration sweeps.',
+    outcome: 'Passed every project test program in simulation and synthesis, with writeback traces matching the reference implementation.',
+    year: '2026'
+  },
+  {
     id: 'hill-street-planes',
     title: '1012 Hill Street Planes',
     summary: 'Self-hosted ADS-B receiver and live aircraft map; observed 2,619 aircraft addresses in one day and reduced 60-second forecast error by 19.6%.',
@@ -412,6 +434,25 @@ export const projectsData: ProjectItem[] = [
     challenges: 'Maintaining O(log n) median updates on large datasets, ensuring fair order matching, and optimizing data structure selection for various operations.',
     outcome: 'Simulator handles 1M+ orders with sub-millisecond latency per operation. Algorithmic trading strategy achieved 23% returns in backtesting.',
     year: '2022'
+  },
+  {
+    id: 'coffee-chat-graph',
+    title: 'Who Coffee Chats Whom',
+    summary: 'Interactive D3 network mapping 2,301 coffee chats among 166 PSE members at the University of Michigan across three pledge classes.',
+    description: 'Turned a Gmail archive of coffee-chat thank-you emails into an interactive map of connections within Pi Sigma Epsilon at the University of Michigan. A Python pipeline deduplicates messages, matches member identities, and extracts one-to-one chats, then exports a limited public dataset for a static D3 visualization.',
+    tech: ['D3.js', 'JavaScript', 'Python', 'HTML', 'CSS'],
+    tag: 'Tools',
+    showOnHome: true,
+    image: '/assets/coffee-chat-graph.png',
+    links: { demo: 'https://www.psechats.coffee/' },
+    features: [
+      'Force-directed network spanning the Chi, Psi, and Omega pledge classes',
+      'Incremental Gmail Takeout ingestion with message deduplication and member matching',
+      'Filters out workshops, panels, recruiter emails, and other non-chat messages',
+      'Public export uses first names and last initials, with checks against leaking email addresses or message contents',
+      'Static HTML, CSS, and JavaScript site with no backend or build step'
+    ],
+    year: '2026'
   },
   {
     id: 'rocket-sensor',
